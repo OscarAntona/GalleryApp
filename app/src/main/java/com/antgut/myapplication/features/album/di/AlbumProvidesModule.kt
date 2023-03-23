@@ -1,5 +1,7 @@
 package com.antgut.myapplication.features.album.di
 
+import com.antgut.myapplication.app.data.local.db.AppDatabase
+import com.antgut.myapplication.features.album.data.local.db.AlbumDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

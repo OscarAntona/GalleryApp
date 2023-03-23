@@ -1,2 +1,2 @@
-package com.antgut.mmoapp.app.extensions
+package com.antgut.myapplication.app.extensions
 

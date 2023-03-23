@@ -1,5 +1,6 @@
 package com.antgut.myapplication.features.user.di
 
+import com.antgut.myapplication.app.data.local.db.AppDatabase
 import com.antgut.myapplication.features.user.data.local.db.UserDao
 import dagger.Module
 import dagger.Provides

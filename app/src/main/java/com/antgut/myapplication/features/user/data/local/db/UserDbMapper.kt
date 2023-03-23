@@ -1,4 +1,21 @@
 package com.antgut.myapplication.features.user.data.local.db
 
-class UserDbMapper {
+import com.antgut.myapplication.features.user.domain.User
+
+fun UserEntity.toDomain(): User {
+    return User(
+        this.id,
+        this.name,
+        this.username,
+        this.email
+    )
+}
+
+fun User.toEntity(): UserEntity {
+    return UserEntity(
+        this.id,
+        this.name,
+        this.username,
+        this.email
+    )
 }
