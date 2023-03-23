@@ -11,10 +11,13 @@ import javax.inject.Inject
 class AlbumDbLocalDataSource @Inject constructor(
     private val dao: AlbumDao
 ) : AlbumLocalDataSource {
-    override suspend fun saveAlbum(album: List<Album>) {
-        album.forEach { album ->
-            dao.saveAlbum(album.toEntity())
+    override suspend fun saveAlbums(album: List<Album>) {
+        album.forEach {
+            dao.saveAlbum(it.toEntity())
         }
+    }
+    override suspend fun saveAlbum(album: Album) {
+        dao.saveAlbum(album.toEntity())
     }
 
     override suspend fun updateAlbum(album: Album): Either<ErrorApp, Boolean> {
@@ -23,14 +26,22 @@ class AlbumDbLocalDataSource @Inject constructor(
         }?.let { true.right() } ?: ErrorApp.DataError.left()
     }
 
-    override suspend fun getAlbums(): Either<ErrorApp, List<Album>> {
-        dao.getAllAlbum().apply {
-            return if (this.isEmpty()) {
-                ErrorApp.DataError.left()
-            } else {
-                this.map {
-                    it.toDomain()
-                }.right()
+    override suspend fun deleteAlbum(albumId: Int): Either<ErrorApp, Boolean> {
+        return try {
+            dao.deleteAlbum(albumId)
+            true.right()
+        } catch (e: Exception) {
+            ErrorApp.DataError.left()
+        }
+    }
+
+    override suspend fun getAlbums(): List<Album> {
+        val albumLocal = dao.getAllAlbum()
+        return if (albumLocal.isEmpty()) {
+            emptyList()
+        } else {
+            albumLocal.map {
+                it.toDomain()
             }
         }
     }
@@ -43,11 +54,7 @@ class AlbumDbLocalDataSource @Inject constructor(
 
     override suspend fun getAlbumByUser(userId: Int): Either<ErrorApp, Album> {
         dao.getAlbumByUserId(userId).apply {
-            return if (this == null) {
-                ErrorApp.DataError.left()
-            } else {
-                this.toDomain().right()
-            }
+            return this?.toDomain()?.right() ?: ErrorApp.DataError.left()
         }
     }
 
