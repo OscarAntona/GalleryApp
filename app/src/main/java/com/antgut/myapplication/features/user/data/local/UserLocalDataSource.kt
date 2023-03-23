@@ -6,10 +6,12 @@ import com.antgut.myapplication.app.funcional.Either
 import com.antgut.myapplication.features.user.domain.User
 
 interface UserLocalDataSource {
-    suspend fun saveUser(user: List<User>)
-    suspend fun getUsers(): Either<ErrorApp, List<User>>
-    suspend fun getUser(userId: Int): Either<ErrorApp, User>
+    suspend fun saveUsers(user: List<User>)
+    suspend fun saveUser(user: User)
+    suspend fun getUsers(): List<User>
+    suspend fun getUserById(userId: Int): Either<ErrorApp, User>
     suspend fun updateUser(user: User): Either<ErrorApp, Boolean>
+    suspend fun deleteUser(userId: Int): Either<ErrorApp, Boolean>
     suspend fun clear()
 
 }

@@ -11,7 +11,7 @@ interface AlbumDao {
     fun deleteAllAlbum()
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $PK_NAME = :userId")
-    suspend fun getAlbumByUserId(userId: Int): AlbumEntity?
+    suspend fun getAlbumsByUser(userId: Int): List<AlbumEntity>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $PK_NAME = :albumId")
     suspend fun getAlbumById(albumId: Int): AlbumEntity?

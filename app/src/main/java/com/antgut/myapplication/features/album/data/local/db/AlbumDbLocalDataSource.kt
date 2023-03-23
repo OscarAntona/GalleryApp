@@ -16,6 +16,7 @@ class AlbumDbLocalDataSource @Inject constructor(
             dao.saveAlbum(it.toEntity())
         }
     }
+
     override suspend fun saveAlbum(album: Album) {
         dao.saveAlbum(album.toEntity())
     }
@@ -52,9 +53,15 @@ class AlbumDbLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getAlbumByUser(userId: Int): Either<ErrorApp, Album> {
-        dao.getAlbumByUserId(userId).apply {
-            return this?.toDomain()?.right() ?: ErrorApp.DataError.left()
+    override suspend fun getAlbumsByUser(userId: Int): Either<ErrorApp, List<Album>> {
+        dao.getAlbumsByUser(userId).apply {
+            return if (this.isEmpty()) {
+                ErrorApp.DataError.left()
+            } else {
+                this.map {
+                    it.toDomain()
+                }.right()
+            }
         }
     }
 

@@ -40,8 +40,8 @@ class AlbumDataRepository @Inject constructor(
         localDataSource.saveAlbum(album)
     }
 
-    override suspend fun getAlbumByUser(userId: Int): Either<ErrorApp, Album> {
-        val localAlbum = localDataSource.getAlbumByUser(userId)
+    override suspend fun getAlbumsByUser(userId: Int): Either<ErrorApp, List<Album>> {
+        val localAlbum = localDataSource.getAlbumsByUser(userId)
         return if (localAlbum.isLeft()) {
             ErrorApp.DataError.left()
         } else {

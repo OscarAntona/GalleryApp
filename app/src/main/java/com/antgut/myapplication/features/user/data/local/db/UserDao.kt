@@ -5,11 +5,13 @@ import androidx.room.*
 @Dao
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    @Transaction
     fun saveUser(vararg user: UserEntity)
 
     @Query("DELETE FROM $TABLE_NAME")
     fun deleteAllUser()
+
+    @Query("DELETE FROM $TABLE_NAME WHERE $PK_NAME = :userId")
+    suspend fun deleteUser(userId: Int)
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $PK_NAME= :userId")
     suspend fun getUserById(userId: Int): UserEntity?

@@ -11,10 +11,14 @@ import javax.inject.Inject
 class PhotoDbLocalDataSource @Inject constructor(
     private val dao: PhotoDao
 ) : PhotoLocalDataSource {
-    override suspend fun savePhoto(photo: List<Photo>) {
-        photo.forEach { photo ->
-            dao.savePhoto(photo.toEntity())
+    override suspend fun savePhotos(photo: List<Photo>) {
+        photo.forEach {
+            dao.savePhoto(it.toEntity())
         }
+    }
+
+    override suspend fun savePhoto(photo: Photo) {
+        dao.savePhoto(photo.toEntity())
     }
 
     override suspend fun updatePhoto(photo: Photo): Either<ErrorApp, Boolean> {
@@ -23,8 +27,28 @@ class PhotoDbLocalDataSource @Inject constructor(
         }?.let { true.right() } ?: ErrorApp.DataError.left()
     }
 
-    override suspend fun getPhotos(): Either<ErrorApp, List<Photo>> {
-        dao.getAllPhoto().apply {
+    override suspend fun deletePhoto(photoId: Int): Either<ErrorApp, Boolean> {
+        return try {
+            dao.deletePhoto(photoId)
+            true.right()
+        } catch (e: Exception) {
+            ErrorApp.DataError.left()
+        }
+    }
+
+    override suspend fun getPhotos(): List<Photo> {
+        val photoLocal = dao.getAllPhoto()
+        return if (photoLocal.isEmpty()) {
+            emptyList()
+        } else {
+            photoLocal.map {
+                it.toDomain()
+            }
+        }
+    }
+
+    override suspend fun getPhotosByAlbum(albumId: Int): Either<ErrorApp, List<Photo>> {
+        dao.getPhotosByAlbum(albumId).apply {
             return if (this.isEmpty()) {
                 ErrorApp.DataError.left()
             } else {
@@ -35,13 +59,9 @@ class PhotoDbLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getPhotoByAlbum(albumId: Int): Either<ErrorApp, Photo> {
-        dao.getPhotoByAlbum(albumId).apply {
-            return if (this == null) {
-                ErrorApp.DataError.left()
-            } else {
-                this.toDomain().right()
-            }
+    override suspend fun getPhotoById(photoId: Int): Either<ErrorApp, Photo> {
+        dao.getPhotoById(photoId).apply {
+            return this?.toDomain()?.right() ?: ErrorApp.DataError.left()
         }
     }
 

@@ -9,10 +9,14 @@ import com.antgut.myapplication.features.user.domain.User
 import javax.inject.Inject
 
 class UserDbLocalDataSource @Inject constructor(private val dao: UserDao) : UserLocalDataSource {
-    override suspend fun saveUser(user: List<User>) {
+    override suspend fun saveUsers(user: List<User>) {
         user.forEach {
             dao.saveUser(it.toEntity())
         }
+    }
+
+    override suspend fun saveUser(user: User) {
+        dao.saveUser(user.toEntity())
     }
 
     override suspend fun updateUser(user: User): Either<ErrorApp, Boolean> {
@@ -21,19 +25,27 @@ class UserDbLocalDataSource @Inject constructor(private val dao: UserDao) : User
         }?.let { true.right() } ?: ErrorApp.DataError.left()
     }
 
-    override suspend fun getUsers(): Either<ErrorApp, List<User>> {
-        dao.getAllUser().apply {
-            return if (this.isEmpty()) {
-                ErrorApp.DataError.left()
-            } else {
-                this.map {
-                    it.toDomain()
-                }.right()
+    override suspend fun getUsers(): List<User> {
+        val userLocal = dao.getAllUser()
+        return if (userLocal.isEmpty()) {
+            emptyList()
+        } else {
+            userLocal.map {
+                it.toDomain()
             }
         }
     }
 
-    override suspend fun getUser(userId: Int): Either<ErrorApp, User> {
+    override suspend fun deleteUser(userId: Int): Either<ErrorApp, Boolean> {
+        return try {
+            dao.deleteUser(userId)
+            true.right()
+        } catch (e: Exception) {
+            ErrorApp.DataError.left()
+        }
+    }
+
+    override suspend fun getUserById(userId: Int): Either<ErrorApp, User> {
         dao.getUserById(userId).apply {
             return this?.toDomain()?.right() ?: ErrorApp.DataError.left()
         }

@@ -5,14 +5,16 @@ import androidx.room.*
 @Dao
 interface PhotoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    @Transaction
     fun savePhoto(vararg photo: PhotoEntity)
 
     @Query("DELETE FROM $TABLE_NAME")
     fun deleteAllPhoto()
 
+    @Query("DELETE FROM $TABLE_NAME WHERE $PK_NAME = :photoId")
+    suspend fun deletePhoto(photoId: Int)
+
     @Query("SELECT * FROM $TABLE_NAME WHERE $PK_NAME = :albumId")
-    suspend fun getPhotoByAlbum(albumId: Int): PhotoEntity?
+    suspend fun getPhotosByAlbum(albumId: Int): List<PhotoEntity>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $PK_NAME = :photoId")
     suspend fun getPhotoById(photoId: Int): PhotoEntity?

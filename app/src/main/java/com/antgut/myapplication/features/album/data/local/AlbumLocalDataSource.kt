@@ -8,7 +8,7 @@ interface AlbumLocalDataSource {
     suspend fun saveAlbums(album: List<Album>)
     suspend fun saveAlbum(album: Album)
     suspend fun getAlbums(): List<Album>
-    suspend fun getAlbumByUser(userId: Int): Either<ErrorApp, Album>
+    suspend fun getAlbumsByUser(userId: Int): Either<ErrorApp, List<Album>>
     suspend fun getAlbumById(albumId: Int): Either<ErrorApp, Album>
     suspend fun updateAlbum(album: Album): Either<ErrorApp, Boolean>
     suspend fun deleteAlbum(albumId: Int): Either<ErrorApp, Boolean>
