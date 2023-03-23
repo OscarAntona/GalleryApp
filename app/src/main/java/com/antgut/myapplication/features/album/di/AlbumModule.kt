@@ -1,7 +1,10 @@
 package com.antgut.myapplication.features.album.di
 
+import com.antgut.myapplication.features.album.data.AlbumDataRepository
 import com.antgut.myapplication.features.album.data.local.AlbumLocalDataSource
 import com.antgut.myapplication.features.album.data.local.db.AlbumDbLocalDataSource
+import com.antgut.myapplication.features.album.data.remote.AlbumRemoteDataSource
+import com.antgut.myapplication.features.album.data.remote.api.AlbumApiRemoteDataSource
 import com.antgut.myapplication.features.album.domain.AlbumRepository
 import dagger.Binds
 import dagger.Module

@@ -17,6 +17,12 @@ class AlbumDbLocalDataSource @Inject constructor(
         }
     }
 
+    override suspend fun updateAlbum(album: Album): Either<ErrorApp, Boolean> {
+        return dao.getAlbumById(album.id)?.apply {
+            dao.saveAlbum(album.toEntity())
+        }?.let { true.right() } ?: ErrorApp.DataError.left()
+    }
+
     override suspend fun getAlbums(): Either<ErrorApp, List<Album>> {
         dao.getAllAlbum().apply {
             return if (this.isEmpty()) {
@@ -29,8 +35,14 @@ class AlbumDbLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getAlbum(albumId: Int): Either<ErrorApp, Album> {
+    override suspend fun getAlbumById(albumId: Int): Either<ErrorApp, Album> {
         dao.getAlbumById(albumId).apply {
+            return this?.toDomain()?.right() ?: ErrorApp.DataError.left()
+        }
+    }
+
+    override suspend fun getAlbumByUser(userId: Int): Either<ErrorApp, Album> {
+        dao.getAlbumByUserId(userId).apply {
             return if (this == null) {
                 ErrorApp.DataError.left()
             } else {

@@ -17,6 +17,12 @@ class PhotoDbLocalDataSource @Inject constructor(
         }
     }
 
+    override suspend fun updatePhoto(photo: Photo): Either<ErrorApp, Boolean> {
+        return dao.getPhotoById(photo.id)?.apply {
+            dao.savePhoto(photo.toEntity())
+        }?.let { true.right() } ?: ErrorApp.DataError.left()
+    }
+
     override suspend fun getPhotos(): Either<ErrorApp, List<Photo>> {
         dao.getAllPhoto().apply {
             return if (this.isEmpty()) {
@@ -29,8 +35,8 @@ class PhotoDbLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getPhoto(photoId: Int): Either<ErrorApp, Photo> {
-        dao.getPhotoById(photoId).apply {
+    override suspend fun getPhotoByAlbum(albumId: Int): Either<ErrorApp, Photo> {
+        dao.getPhotoByAlbum(albumId).apply {
             return if (this == null) {
                 ErrorApp.DataError.left()
             } else {

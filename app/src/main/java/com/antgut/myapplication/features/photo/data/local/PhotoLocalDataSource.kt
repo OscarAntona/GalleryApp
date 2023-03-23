@@ -7,7 +7,8 @@ import com.antgut.myapplication.features.photo.domain.Photo
 interface PhotoLocalDataSource {
     suspend fun savePhoto(photo: List<Photo>)
     suspend fun getPhotos(): Either<ErrorApp, List<Photo>>
-    suspend fun getPhoto(photoId: Int): Either<ErrorApp, Photo>
+    suspend fun getPhotoByAlbum(photoId: Int): Either<ErrorApp, Photo>
+    suspend fun updatePhoto(photo: Photo): Either<ErrorApp, Boolean>
     suspend fun clear()
 
 }

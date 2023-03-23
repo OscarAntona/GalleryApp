@@ -1,7 +1,10 @@
 package com.antgut.myapplication.features.user.di
 
+import com.antgut.myapplication.features.user.data.UserDataRepository
 import com.antgut.myapplication.features.user.data.local.UserLocalDataSource
 import com.antgut.myapplication.features.user.data.local.db.UserDbLocalDataSource
+import com.antgut.myapplication.features.user.data.remote.UserRemoteDataSource
+import com.antgut.myapplication.features.user.data.remote.api.UserApiRemoteDataSource
 import com.antgut.myapplication.features.user.domain.UserRepository
 import dagger.Binds
 import dagger.Module

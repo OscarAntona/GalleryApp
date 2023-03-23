@@ -8,13 +8,17 @@ import com.antgut.myapplication.features.user.data.local.UserLocalDataSource
 import com.antgut.myapplication.features.user.domain.User
 import javax.inject.Inject
 
-class UserDbLocalDataSource @Inject constructor(
-    private val dao: UserDao
-) : UserLocalDataSource {
+class UserDbLocalDataSource @Inject constructor(private val dao: UserDao) : UserLocalDataSource {
     override suspend fun saveUser(user: List<User>) {
         user.forEach { user ->
             dao.saveUser(user.toEntity())
         }
+    }
+
+    override suspend fun updateUser(user: User): Either<ErrorApp, Boolean> {
+        return dao.getUserById(user.id)?.apply {
+            dao.saveUser(user.toEntity())
+        }?.let { true.right() } ?: ErrorApp.DataError.left()
     }
 
     override suspend fun getUsers(): Either<ErrorApp, List<User>> {
