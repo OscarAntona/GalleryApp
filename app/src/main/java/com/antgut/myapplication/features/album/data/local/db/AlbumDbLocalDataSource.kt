@@ -12,8 +12,8 @@ class AlbumDbLocalDataSource @Inject constructor(
     private val dao: AlbumDao
 ) : AlbumLocalDataSource {
     override suspend fun saveAlbum(album: List<Album>) {
-        album.forEach { album ->
-            dao.saveAlbum(album.toEntity())
+        album.forEach {
+            dao.saveAlbum(it.toEntity())
         }
     }
 
@@ -31,11 +31,7 @@ class AlbumDbLocalDataSource @Inject constructor(
 
     override suspend fun getAlbum(albumId: Int): Either<ErrorApp, Album> {
         dao.getAlbumById(albumId).apply {
-            return if (this == null) {
-                ErrorApp.DataError.left()
-            } else {
-                this.toDomain().right()
-            }
+            return this?.toDomain()?.right() ?: ErrorApp.DataError.left()
         }
     }
 

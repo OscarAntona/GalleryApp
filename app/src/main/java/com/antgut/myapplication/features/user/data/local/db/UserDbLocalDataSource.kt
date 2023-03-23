@@ -12,8 +12,8 @@ class UserDbLocalDataSource @Inject constructor(
     private val dao: UserDao
 ) : UserLocalDataSource {
     override suspend fun saveUser(user: List<User>) {
-        user.forEach { user ->
-            dao.saveUser(user.toEntity())
+        user.forEach {
+            dao.saveUser(it.toEntity())
         }
     }
 
@@ -31,11 +31,7 @@ class UserDbLocalDataSource @Inject constructor(
 
     override suspend fun getUser(userId: Int): Either<ErrorApp, User> {
         dao.getUserById(userId).apply {
-            return if (this == null) {
-                ErrorApp.DataError.left()
-            } else {
-                this.toDomain().right()
-            }
+            return this?.toDomain()?.right() ?: ErrorApp.DataError.left()
         }
     }
 

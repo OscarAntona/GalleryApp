@@ -12,8 +12,8 @@ class PhotoDbLocalDataSource @Inject constructor(
     private val dao: PhotoDao
 ) : PhotoLocalDataSource {
     override suspend fun savePhoto(photo: List<Photo>) {
-        photo.forEach { photo ->
-            dao.savePhoto(photo.toEntity())
+        photo.forEach {
+            dao.savePhoto(it.toEntity())
         }
     }
 
@@ -31,11 +31,7 @@ class PhotoDbLocalDataSource @Inject constructor(
 
     override suspend fun getPhoto(photoId: Int): Either<ErrorApp, Photo> {
         dao.getPhotoById(photoId).apply {
-            return if (this == null) {
-                ErrorApp.DataError.left()
-            } else {
-                this.toDomain().right()
-            }
+            return this?.toDomain()?.right() ?: ErrorApp.DataError.left()
         }
     }
 
