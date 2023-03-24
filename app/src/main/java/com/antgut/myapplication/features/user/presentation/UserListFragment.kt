@@ -12,10 +12,7 @@ import com.antgut.myapplication.R
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.extensions.hideWithDelay
 import com.antgut.myapplication.app.extensions.showWithDelay
-import com.antgut.myapplication.databinding.FragmentAlbumListBinding
 import com.antgut.myapplication.databinding.FragmentUserListBinding
-import com.antgut.myapplication.features.album.presentation.AlbumListViewModel
-import com.antgut.myapplication.features.album.presentation.adapter.AlbumListAdapter
 import com.antgut.myapplication.features.user.presentation.adapter.UserListAdapter
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
@@ -41,7 +38,7 @@ class UserListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObservers()
-        viewModel.loadPhotos()
+        viewModel.loadAlbums()
     }
 
     private fun setupView() {
@@ -76,7 +73,7 @@ class UserListFragment : Fragment() {
 
     private fun navigateToAlbum(userId: Int) {
         findNavController().navigate(
-            UserListFragmentDirections.actionToAlbum(userId)
+            UserListFragmentDirections.actionUserListFragmentToAlbumsListFragment(userId)
         )
     }
 }

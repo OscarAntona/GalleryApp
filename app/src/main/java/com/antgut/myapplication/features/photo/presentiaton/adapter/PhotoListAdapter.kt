@@ -1,15 +1,14 @@
-package com.antgut.myapplication.features.album.presentation.adapter
+package com.antgut.myapplication.features.photo.presentiaton.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-
 import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.ListAdapter
 import com.antgut.myapplication.R
-import com.antgut.myapplication.features.album.domain.Album
+import com.antgut.myapplication.features.photo.domain.Photo
 
-class AlbumListAdapter : ListAdapter<Album, AlbumListViewHolder>
-    (AsyncDifferConfig.Builder(AlbumListDiff()).build()) {
+class PhotoListAdapter : ListAdapter<Photo, PhotoListViewHolder>
+    (AsyncDifferConfig.Builder(PhotoListDiff()).build()) {
     private var itemClick: ((Int) -> Unit)? = null
 
     fun setOnClickItem(itemClick: (Int) -> Unit) {
@@ -19,13 +18,13 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListViewHolder>
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): AlbumListViewHolder {
+    ): PhotoListViewHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.view_item_album, parent, false)
-        return AlbumListViewHolder(view)
+            LayoutInflater.from(parent.context).inflate(R.layout.view_item_photo, parent, false)
+        return PhotoListViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: AlbumListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PhotoListViewHolder, position: Int) {
         holder.bind(currentList[position], itemClick)
     }
 
