@@ -2,13 +2,13 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/spacing_l"
     android:layout_marginTop="@dimen/spacing_l"
     android:layout_marginEnd="@dimen/spacing_l"
-    app:cardCornerRadius="@dimen/spacing_l"
     android:elevation="@dimen/spacing_s"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    app:cardCornerRadius="@dimen/spacing_l">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,13 +16,13 @@
         android:padding="@dimen/spacing_xs">
 
         <com.google.android.material.imageview.ShapeableImageView
-            style="@style/ImageRoundCorner"
             android:id="@+id/photo_thumbnail"
+            style="@style/ImageRoundCorner"
             android:layout_width="@dimen/photo_size"
-            android:padding="@dimen/spacing_s"
-            android:elevation="@dimen/spacing_s"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
+            android:elevation="@dimen/spacing_s"
+            android:padding="@dimen/spacing_s"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/label_title_photo"
@@ -50,8 +50,8 @@
             android:id="@+id/icon_arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:elevation="@dimen/spacing_s"
             android:contentDescription="@string/inspect_photo"
+            android:elevation="@dimen/spacing_s"
             android:src="@drawable/ic_arrow_forward"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

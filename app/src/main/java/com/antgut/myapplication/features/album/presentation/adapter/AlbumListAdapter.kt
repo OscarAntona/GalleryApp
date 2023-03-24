@@ -9,7 +9,7 @@ import com.antgut.myapplication.R
 import com.antgut.myapplication.features.album.domain.Album
 
 class AlbumListAdapter : ListAdapter<Album, AlbumListViewHolder>
-    (AsyncDifferConfig.Builder(AlbumListDiff()).build()){
+    (AsyncDifferConfig.Builder(AlbumListDiff()).build()) {
     private var itemClick: ((Int) -> Unit)? = null
 
     fun setOnClickItem(itemClick: (Int) -> Unit) {
@@ -21,7 +21,8 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListViewHolder>
         parent: ViewGroup,
         viewType: Int
     ): AlbumListViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_item_album, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.view_item_album, parent, false)
         return AlbumListViewHolder(view)
     }
 

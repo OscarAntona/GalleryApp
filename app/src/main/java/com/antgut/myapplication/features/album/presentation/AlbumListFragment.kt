@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.antgut.myapplication.R
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.extensions.hideWithDelay
@@ -18,10 +17,9 @@ import com.antgut.myapplication.features.album.presentation.adapter.AlbumListAda
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
-class AlbumsListFragment : Fragment() {
+class AlbumListFragment : Fragment() {
     private var skeleton: Skeleton? = null
     private var binding: FragmentAlbumListBinding? = null
     private val albumAdapter = AlbumListAdapter()
@@ -47,13 +45,13 @@ class AlbumsListFragment : Fragment() {
         binding?.apply {
             albumList.apply {
                 adapter = albumAdapter
-                skeleton = applySkeleton(R.layout.view_item_album,)
+                skeleton = applySkeleton(R.layout.view_item_album)
             }
         }
     }
 
     private fun setupObservers() {
-        val albumFeedSubscriber =
+        val albumListSubscriber =
             Observer<AlbumListViewModel.UiState> { uiState ->
                 if (uiState.isLoading) {
                     skeleton?.showWithDelay()
@@ -62,18 +60,20 @@ class AlbumsListFragment : Fragment() {
                     uiState.error?.let {
                         ErrorApp.DataError
                     } ?: run {
-                        albumAdapter.submitList(uiState.albumFeed)
-
+                        albumAdapter.submitList(uiState.albumList)
+                        albumAdapter.setOnClickItem {
+                            navigateToPhoto(it)
+                        }
                     }
                 }
 
             }
-        viewModel.uiState.observe(viewLifecycleOwner, albumFeedSubscriber)
+        viewModel.uiState.observe(viewLifecycleOwner, albumListSubscriber)
     }
 
     private fun navigateToPhoto(albumId: Int) {
         findNavController().navigate(
-            AlbumFeedFragmentDirections.actionToPhoto(albumId)
+            AlbumListFragmentDirections.actionToPhoto(albumId)
         )
     }
 }

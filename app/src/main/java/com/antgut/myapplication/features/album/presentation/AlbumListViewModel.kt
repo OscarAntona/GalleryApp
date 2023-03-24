@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.features.album.domain.Album
-import com.antgut.myapplication.features.album.domain.GetAlbumUseCase
 import com.antgut.myapplication.features.album.domain.GetAlbumsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AlbumListViewModel @Inject constructor(
     private val getAlbumsUseCase: GetAlbumsUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _uiState = MutableLiveData<UiState>()
     val uiState: LiveData<UiState>
@@ -30,15 +29,16 @@ class AlbumListViewModel @Inject constructor(
                     UiState(
                         isLoading = false,
                         error = this.swap().getOrNull(),
-                        albumFeed = this.getOrNull()
+                        albumList = this.getOrNull()
                     )
                 )
             }
         }
     }
+
     data class UiState(
         val isLoading: Boolean = false,
         val error: ErrorApp? = null,
-        val albumFeed: List<Album>? = null
+        val albumList: List<Album>? = null
     )
 }
