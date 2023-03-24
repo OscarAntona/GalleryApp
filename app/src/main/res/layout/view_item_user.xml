@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginStart="@dimen/spacing_l"
+    android:layout_marginTop="@dimen/spacing_l"
+    android:layout_marginEnd="@dimen/spacing_l"
+    app:cardCornerRadius="@dimen/spacing_l"
+    android:elevation="@dimen/spacing_l"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_l">
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_user_name"
+            style="@style/MaterialAlertDialog.Material3.Title.Text"
+            android:textSize="24sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:minLines="1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/icon_arrow"
+            tools:text="@tools:sample/lorem/random" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_user_username"
+            style="@style/MaterialAlertDialog.Material3.Body.Text"
+            android:textSize="16sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:minLines="1"
+            app:layout_constraintTop_toBottomOf="@id/label_user_name"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/icon_arrow"
+            tools:text="@tools:sample/lorem/random" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_user_email"
+            style="@style/MaterialAlertDialog.Material3.Body.Text"
+            android:textSize="12sp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:minLines="1"
+            app:layout_constraintTop_toBottomOf="@id/label_user_username"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/icon_arrow"
+            tools:text="@tools:sample/lorem/random" />
+        <ImageView
+            android:id="@+id/icon_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_forward"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:contentDescription="@string/inspect_user" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

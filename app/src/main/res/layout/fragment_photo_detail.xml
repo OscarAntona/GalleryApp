@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.faltenreich.skeletonlayout.SkeletonLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/skeleton_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/ImageRoundCorner"
+            android:id="@+id/photo_thumbnail"
+            android:elevation="@dimen/spacing_s"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            tools:src="@tools:sample/avatars"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+        </com.google.android.material.imageview.ShapeableImageView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.faltenreich.skeletonlayout.SkeletonLayout>

@@ -8,7 +8,7 @@ interface AlbumDao {
     fun saveAlbum(vararg album: AlbumEntity)
 
     @Query("DELETE FROM $TABLE_NAME")
-    fun deleteAllAlbum()
+    suspend fun deleteAllAlbum()
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $PK_NAME = :userId")
     suspend fun getAlbumsByUser(userId: Int): List<AlbumEntity>

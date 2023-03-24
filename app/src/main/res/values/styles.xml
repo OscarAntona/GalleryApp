@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ImageRoundCorner">
+        <item name="shapeAppearanceOverlay">@style/ShapeableImageCorner</item>
+    </style>
+    <style name="ShapeableImageCorner">
+        <item name="cornerSize">@dimen/spacing_l</item>
+    </style>
+
+</resources>
