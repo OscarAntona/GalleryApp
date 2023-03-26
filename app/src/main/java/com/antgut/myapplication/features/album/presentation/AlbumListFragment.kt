@@ -48,8 +48,10 @@ class AlbumListFragment : Fragment() {
         binding?.apply {
             albumList.apply {
                 adapter = albumAdapter
-                layoutManager = LinearLayoutManager(requireContext(),
-                    LinearLayoutManager.VERTICAL,false)
+                layoutManager = LinearLayoutManager(
+                    requireContext(),
+                    LinearLayoutManager.VERTICAL, false
+                )
                 skeleton = applySkeleton(R.layout.view_item_album)
             }
         }

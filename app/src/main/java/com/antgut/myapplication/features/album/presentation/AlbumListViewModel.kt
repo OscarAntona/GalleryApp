@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.features.album.domain.Album
-import com.antgut.myapplication.features.album.domain.GetAlbumsByUserUseCase
 import com.antgut.myapplication.features.album.domain.GetAlbumsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers

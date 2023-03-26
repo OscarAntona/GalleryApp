@@ -47,8 +47,10 @@ class PhotoListFragment : Fragment() {
         binding?.apply {
             photoList.apply {
                 adapter = photoAdapter
-                layoutManager = LinearLayoutManager(requireContext(),
-                    LinearLayoutManager.VERTICAL,false)
+                layoutManager = LinearLayoutManager(
+                    requireContext(),
+                    LinearLayoutManager.VERTICAL, false
+                )
                 skeleton = applySkeleton(R.layout.view_item_photo)
             }
         }

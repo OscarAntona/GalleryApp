@@ -7,5 +7,5 @@ import retrofit2.http.Path
 
 interface AlbumApiEndPoints {
     @GET("users/{userId}/albums")
-    suspend fun getAlbums(@Path("userId")userId:Int): Response<List<AlbumApiModel>>
+    suspend fun getAlbums(@Path("userId") userId: Int): Response<List<AlbumApiModel>>
 }

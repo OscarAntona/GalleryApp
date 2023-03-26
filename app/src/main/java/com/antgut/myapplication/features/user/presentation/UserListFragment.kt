@@ -46,7 +46,8 @@ class UserListFragment : Fragment() {
         binding?.apply {
             userList.apply {
                 adapter = userAdapter
-                layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.VERTICAL,false)
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 skeleton = applySkeleton(R.layout.view_item_album)
             }
         }
