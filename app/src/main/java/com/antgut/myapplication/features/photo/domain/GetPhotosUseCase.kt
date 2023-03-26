@@ -5,7 +5,7 @@ import com.antgut.myapplication.app.funcional.Either
 import javax.inject.Inject
 
 class GetPhotosUseCase @Inject constructor(private val repository: PhotoRepository) {
-    suspend operator fun invoke(): Either<ErrorApp, List<Photo>> {
-        return repository.getPhotos()
+    suspend operator fun invoke(albumId: Int): Either<ErrorApp, List<Photo>> {
+        return repository.getPhotos(albumId)
     }
 }

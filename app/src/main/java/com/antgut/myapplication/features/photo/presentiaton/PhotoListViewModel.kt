@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.antgut.myapplication.app.domain.ErrorApp
-import com.antgut.myapplication.features.photo.domain.GetPhotosByAlbumUseCase
+import com.antgut.myapplication.features.photo.domain.GetPhotosUseCase
 import com.antgut.myapplication.features.photo.domain.Photo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PhotoListViewModel @Inject constructor(
-    private val getPhotosUseCase: GetPhotosByAlbumUseCase
+    private val getPhotosUseCase: GetPhotosUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableLiveData<UiState>()

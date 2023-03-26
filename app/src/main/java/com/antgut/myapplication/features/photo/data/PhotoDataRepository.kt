@@ -14,10 +14,10 @@ class PhotoDataRepository @Inject constructor(
     private val remoteDataSource: PhotoRemoteDataSource,
     private val localDataSource: PhotoLocalDataSource
 ) : PhotoRepository {
-    override suspend fun getPhotos(): Either<ErrorApp, List<Photo>> {
+    override suspend fun getPhotos(albumId: Int): Either<ErrorApp, List<Photo>> {
         val localPhotos = localDataSource.getPhotos()
         return if (localPhotos.isEmpty()) {
-            return remoteDataSource.getPhotos().map { remotePhotos ->
+            return remoteDataSource.getPhotos(albumId).map { remotePhotos ->
                 localDataSource.clear()
                 localDataSource.savePhotos(remotePhotos)
                 remotePhotos
