@@ -4,6 +4,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface UserApiEndPoints {
-    @GET("users.json")
+    @GET("users")
     suspend fun getUsers(): Response<List<UserApiModel>>
 }

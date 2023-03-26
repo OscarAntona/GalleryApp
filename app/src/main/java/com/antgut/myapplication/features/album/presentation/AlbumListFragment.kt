@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.antgut.myapplication.R
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.extensions.hideWithDelay
@@ -47,6 +48,8 @@ class AlbumListFragment : Fragment() {
         binding?.apply {
             albumList.apply {
                 adapter = albumAdapter
+                layoutManager = LinearLayoutManager(requireContext(),
+                    LinearLayoutManager.VERTICAL,false)
                 skeleton = applySkeleton(R.layout.view_item_album)
             }
         }

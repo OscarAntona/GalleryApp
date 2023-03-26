@@ -7,8 +7,8 @@ import javax.inject.Inject
 class GetAlbumsUseCase @Inject constructor(
     private val albumRepository: AlbumRepository
 ) {
-    suspend operator fun invoke(): Either<ErrorApp, List<Album>> {
-        return albumRepository.getAlbums()
+    suspend operator fun invoke(userId:Int): Either<ErrorApp, List<Album>> {
+        return albumRepository.getAlbums(userId)
     }
 
 }

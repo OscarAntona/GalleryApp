@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.antgut.myapplication.R
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.extensions.hideWithDelay
@@ -46,6 +47,8 @@ class PhotoListFragment : Fragment() {
         binding?.apply {
             photoList.apply {
                 adapter = photoAdapter
+                layoutManager = LinearLayoutManager(requireContext(),
+                    LinearLayoutManager.VERTICAL,false)
                 skeleton = applySkeleton(R.layout.view_item_photo)
             }
         }

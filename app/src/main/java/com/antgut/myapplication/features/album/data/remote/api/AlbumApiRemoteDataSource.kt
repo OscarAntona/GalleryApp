@@ -10,9 +10,9 @@ import javax.inject.Inject
 class AlbumApiRemoteDataSource @Inject constructor(val albumApiEndPoints: AlbumApiEndPoints) :
     AlbumRemoteDataSource {
 
-    override suspend fun getAlbums(): Either<ErrorApp, List<Album>> {
+    override suspend fun getAlbums(userId:Int): Either<ErrorApp, List<Album>> {
         return apiCall {
-            albumApiEndPoints.getAlbums()
+            albumApiEndPoints.getAlbums(userId)
         }.map { it ->
             it.map { it.toDomain() }
         }

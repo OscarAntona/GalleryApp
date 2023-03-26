@@ -25,22 +25,4 @@ object LocalModule {
             AppDatabase::class.java, "AppDatabase"
         ).build()
     }
-
-    @Provides
-    @Singleton
-    fun provideAlbumDao(appDatabase: AppDatabase): AlbumDao {
-        return appDatabase.albumDao()
-    }
-
-    @Provides
-    @Singleton
-    fun providePhotoDao(appDatabase: AppDatabase): PhotoDao {
-        return appDatabase.photoDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideUserDao(appDatabase: AppDatabase): UserDao {
-        return appDatabase.userDao()
-    }
 }
