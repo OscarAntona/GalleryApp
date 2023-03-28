@@ -12,4 +12,18 @@
     <string name="inspect_user">user</string>
     <string name="inspect_photo">photo</string>
     <string name="inspect_album">Album</string>
+    <string name="inspect_add_album">Add album</string>
+    <string name="inspect_add_user">Add user</string>
+    <string name="inspect_add_photo">Add photo</string>
+    <string name="name_title">Name</string>
+    <string name="delete_button">Delete</string>
+    <string name="save_button">Save</string>
+    <string name="inspect_save">Save</string>
+    <string name="inspect_delete">Delete</string>
+    <string name="username_title">Username</string>
+    <string name="email_title">Email</string>
+    <string name="image_title">Image Title</string>
+    <string name="url_title">Image Url</string>
+    <string name="thumbnail_url">Image thumbnail Url</string>
+    <string name="album_title">Title</string>
 </resources>

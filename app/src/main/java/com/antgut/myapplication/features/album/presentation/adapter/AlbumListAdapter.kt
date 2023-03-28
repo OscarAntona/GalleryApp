@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.antgut.myapplication.R
 import com.antgut.myapplication.features.album.domain.Album
 
-class AlbumListAdapter : ListAdapter<Album, AlbumListViewHolder>
+class AlbumListAdapter(val onLongClick: (Album) -> Unit) : ListAdapter<Album, AlbumListViewHolder>
     (AsyncDifferConfig.Builder(AlbumListDiff()).build()) {
     private var itemClick: ((Int) -> Unit)? = null
 
@@ -22,7 +22,7 @@ class AlbumListAdapter : ListAdapter<Album, AlbumListViewHolder>
     ): AlbumListViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.view_item_album, parent, false)
-        return AlbumListViewHolder(view)
+        return AlbumListViewHolder(view) { position -> onLongClick(currentList[position]) }
     }
 
     override fun onBindViewHolder(holder: AlbumListViewHolder, position: Int) {

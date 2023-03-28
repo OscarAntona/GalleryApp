@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.antgut.myapplication.R
 import com.antgut.myapplication.features.photo.domain.Photo
 
-class PhotoListAdapter : ListAdapter<Photo, PhotoListViewHolder>
+class PhotoListAdapter(val onLongClick: (Photo) -> Unit) : ListAdapter<Photo, PhotoListViewHolder>
     (AsyncDifferConfig.Builder(PhotoListDiff()).build()) {
     private var itemClick: ((Int) -> Unit)? = null
 
@@ -21,7 +21,7 @@ class PhotoListAdapter : ListAdapter<Photo, PhotoListViewHolder>
     ): PhotoListViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.view_item_photo, parent, false)
-        return PhotoListViewHolder(view)
+        return PhotoListViewHolder(view) { position -> onLongClick(currentList[position]) }
     }
 
     override fun onBindViewHolder(holder: PhotoListViewHolder, position: Int) {

@@ -23,7 +23,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class PhotoListFragment : Fragment() {
     private var skeleton: Skeleton? = null
     private var binding: FragmentPhotoListBinding? = null
-    private val photoAdapter = PhotoListAdapter()
+    private val photoAdapter = PhotoListAdapter {
+
+    }
     private val viewModel by viewModels<PhotoListViewModel>()
     private val args: PhotoListFragmentArgs by navArgs()
 

@@ -15,6 +15,7 @@ import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.extensions.hideWithDelay
 import com.antgut.myapplication.app.extensions.showWithDelay
 import com.antgut.myapplication.databinding.FragmentAlbumListBinding
+import com.antgut.myapplication.features.album.domain.Album
 import com.antgut.myapplication.features.album.presentation.adapter.AlbumListAdapter
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
@@ -24,7 +25,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class AlbumListFragment : Fragment() {
     private var skeleton: Skeleton? = null
     private var binding: FragmentAlbumListBinding? = null
-    private val albumAdapter = AlbumListAdapter()
+    private val albumAdapter = AlbumListAdapter {
+
+    }
     private val viewModel by viewModels<AlbumListViewModel>()
     private val args: AlbumListFragmentArgs by navArgs()
 
@@ -76,6 +79,11 @@ class AlbumListFragment : Fragment() {
 
             }
         viewModel.uiState.observe(viewLifecycleOwner, albumListSubscriber)
+    }
+    private fun navigateToDialog(album: Album) {
+        findNavController().navigate(
+            AlbumListFragmentDirections
+        )
     }
 
     private fun navigateToPhoto(albumId: Int) {

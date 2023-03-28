@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.antgut.myapplication.R
 import com.antgut.myapplication.features.user.domain.User
 
-class UserListAdapter : ListAdapter<User, UserListViewHolder>
+class UserListAdapter(val onLongClick: (User) -> Unit) : ListAdapter<User, UserListViewHolder>
     (AsyncDifferConfig.Builder(UserListDiff()).build()) {
     private var itemClick: ((Int) -> Unit)? = null
 
@@ -21,7 +21,7 @@ class UserListAdapter : ListAdapter<User, UserListViewHolder>
     ): UserListViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.view_item_user, parent, false)
-        return UserListViewHolder(view)
+        return UserListViewHolder(view) { position -> onLongClick(currentList[position]) }
     }
 
     override fun onBindViewHolder(holder: UserListViewHolder, position: Int) {

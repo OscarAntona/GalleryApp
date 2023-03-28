@@ -23,7 +23,9 @@ import dagger.hilt.android.AndroidEntryPoint
 class UserListFragment : Fragment() {
     private var skeleton: Skeleton? = null
     private var binding: FragmentUserListBinding? = null
-    private val userAdapter = UserListAdapter()
+    private val userAdapter = UserListAdapter {
+
+    }
     private val viewModel by viewModels<UserListViewModel>()
 
     override fun onCreateView(
