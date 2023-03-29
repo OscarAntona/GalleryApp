@@ -26,21 +26,32 @@ class AlbumDialogViewModel @Inject constructor(
 
     fun saveAlbum(album: Album) {
         viewModelScope.launch(Dispatchers.IO) {
-            viewModelScope.launch {
-                saveAlbumUseCase(album)
-                successSaveAlbum(true)
+                saveAlbumUseCase(album).apply {
+                    _uiModel.postValue(
+                        UiModel(
+                            isSuccess = false,
+                            isSaved = true,
+                            album = album
+                           )
+                        )
+                }
             }
         }
-    }
 
     fun getAlbum(albumId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            getAlbumUseCase(albumId).fold(
-                { errorResponse(it) },
-                { successGetAlbum(it) }
-            )
-            getAlbumUseCase(albumId).map { album ->
-                _uiModel.postValue(UiModel(album = album))
+            getAlbumUseCase.invoke(albumId).apply {
+                _uiModel.postValue(
+                    UiModel(
+                        isSuccess=false,
+                        isSaved = false,
+                        error = this.swap().getOrNull(),
+                        album = this.getOrNull()
+                    )
+                )
+            }
+            getAlbumUseCase(albumId).map { album1 ->
+                _uiModel.postValue(UiModel(album = album1))
             }
         }
     }

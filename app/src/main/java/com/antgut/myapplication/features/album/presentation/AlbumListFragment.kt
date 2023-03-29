@@ -25,9 +25,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class AlbumListFragment : Fragment() {
     private var skeleton: Skeleton? = null
     private var binding: FragmentAlbumListBinding? = null
-    private val albumAdapter = AlbumListAdapter {
-
-    }
+    private val albumAdapter = AlbumListAdapter()
     private val viewModel by viewModels<AlbumListViewModel>()
     private val args: AlbumListFragmentArgs by navArgs()
 
@@ -74,15 +72,19 @@ class AlbumListFragment : Fragment() {
                         albumAdapter.setOnClickItem {
                             navigateToPhoto(it)
                         }
+                        albumAdapter.onLongClickItem {
+                            navigateToDialog(it)
+                        }
+
                     }
                 }
 
             }
         viewModel.uiState.observe(viewLifecycleOwner, albumListSubscriber)
     }
-    private fun navigateToDialog(album: Album) {
+    private fun navigateToDialog(albumId: Int) {
         findNavController().navigate(
-            AlbumListFragmentDirections
+            AlbumListFragmentDirections.actionAlbumsListFragmentToAlbumDialogFragment(albumId)
         )
     }
 

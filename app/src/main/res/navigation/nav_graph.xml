@@ -42,8 +42,8 @@
         android:name="com.antgut.myapplication.features.album.presentation.AlbumDialogFragment"
         android:label="AlbumDialogFragment">
         <argument
-            android:name="album"
+            android:name="album_id"
             android:defaultValue="0"
-            app:argType="Album" />
+            app:argType="integer" />
     </dialog>
 </navigation>

@@ -1,7 +1,7 @@
 package com.antgut.myapplication.features.album.domain
 
 data class Album(
-    val id: Int,
+    var id: Int,
     val userId: Int,
     val title: String,
 )
