@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antgut.myapplication.R
 import com.antgut.myapplication.app.domain.ErrorApp
@@ -23,9 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class UserListFragment : Fragment() {
     private var skeleton: Skeleton? = null
     private var binding: FragmentUserListBinding? = null
-    private val userAdapter = UserListAdapter {
-
-    }
+    private val userAdapter = UserListAdapter()
     private val viewModel by viewModels<UserListViewModel>()
 
     override fun onCreateView(
@@ -41,7 +40,7 @@ class UserListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObservers()
-        viewModel.loadAlbums()
+        viewModel.loadUsers()
     }
 
     private fun setupView() {
@@ -73,11 +72,20 @@ class UserListFragment : Fragment() {
                         userAdapter.setOnClickItem {
                             navigateToAlbum(it)
                         }
+                        userAdapter.onLongClickItem {
+                            navigateToUserDialog(it)
+                        }
                     }
                 }
 
             }
         viewModel.uiState.observe(viewLifecycleOwner, userListSubscriber)
+    }
+
+    private fun navigateToUserDialog(userId: Int) {
+       findNavController().navigate(
+           UserListFragmentDirections.actionUserListFragmentToUserDialogFragment(userId)
+       )
     }
 
     private fun navigateToAlbum(userId: Int) {

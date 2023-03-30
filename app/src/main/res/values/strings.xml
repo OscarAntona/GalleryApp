@@ -27,4 +27,7 @@
     <string name="thumbnail_url">Image thumbnail Url</string>
     <string name="album_title">Title</string>
     <string name="label_album">Album:</string>
+    <string name="menu_albums_title">Albums</string>
+    <string name="menu_users_title">Users</string>
+    <string name="menu_photos_title">Photos</string>
 </resources>

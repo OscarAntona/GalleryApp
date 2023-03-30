@@ -3,20 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
     app:startDestination="@id/userListFragment">
+    <action
+        android:id="@+id/action_users"
+        app:destination="@id/users" />
+    <action
+        android:id="@+id/action_albums"
+        app:destination="@id/albums" />
+    <action
+        android:id="@+id/action_photos"
+        app:destination="@id/photos" />
+
     <fragment
         android:id="@+id/albumsListFragment"
         android:name="com.antgut.myapplication.features.album.presentation.AlbumListFragment"
         android:label="AlbumsListFragment">
         <action
             android:id="@+id/action_albumsListFragment_to_photoListFragment"
-            app:destination="@id/photoListFragment" />
+            app:destination="@id/photoListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <argument
             android:name="user_id"
             android:defaultValue="0"
             app:argType="integer" />
         <action
             android:id="@+id/action_albumsListFragment_to_albumDialogFragment"
-            app:destination="@id/albumDialogFragment" />
+            app:destination="@id/albumDialogFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/photoListFragment"
@@ -28,10 +46,18 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_photoListFragment_to_photoDialogFragment"
-            app:destination="@id/photoDialogFragment" />
+            app:destination="@id/photoDialogFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_photoListFragment_to_photoDetailFragment"
-            app:destination="@id/photoDetailFragment" />
+            app:destination="@id/photoDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/userListFragment"
@@ -39,7 +65,18 @@
         android:label="UserListFragment">
         <action
             android:id="@+id/action_userListFragment_to_albumsListFragment"
-            app:destination="@id/albumsListFragment" />
+            app:destination="@id/albumsListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_userListFragment_to_userDialogFragment"
+            app:destination="@id/userDialogFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <dialog
         android:id="@+id/albumDialogFragment"
@@ -68,4 +105,13 @@
             android:defaultValue="0"
             app:argType="integer" />
     </fragment>
+    <dialog
+        android:id="@+id/userDialogFragment"
+        android:name="com.antgut.myapplication.features.user.presentation.UserDialogFragment"
+        android:label="UserDialogFragment">
+        <argument
+            android:name="user_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </dialog>
 </navigation>

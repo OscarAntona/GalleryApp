@@ -21,7 +21,7 @@ class UserListViewModel @Inject constructor(
     val uiState: LiveData<UiState>
         get() = _uiState
 
-    fun loadAlbums() {
+    fun loadUsers() {
         _uiState.value = UiState(isLoading = true)
         viewModelScope.launch(Dispatchers.IO) {
             getUsersUseCase.invoke().apply {
