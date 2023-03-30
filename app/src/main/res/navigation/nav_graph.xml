@@ -5,36 +5,48 @@
     app:startDestination="@id/userListFragment">
     <action
         android:id="@+id/action_users"
-        app:destination="@id/users" />
+        app:destination="@id/userListFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
     <action
         android:id="@+id/action_albums"
-        app:destination="@id/albums" />
+        app:destination="@id/albumFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
     <action
         android:id="@+id/action_photos"
-        app:destination="@id/photos" />
+        app:destination="@id/photoFragment"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right" />
 
     <fragment
-        android:id="@+id/albumsListFragment"
+        android:id="@+id/albumListFragment"
         android:name="com.antgut.myapplication.features.album.presentation.AlbumListFragment"
-        android:label="AlbumsListFragment">
+        android:label="AlbumListFragment">
         <action
-            android:id="@+id/action_albumsListFragment_to_photoListFragment"
+            android:id="@+id/action_albumListFragment_to_photoListFragment"
             app:destination="@id/photoListFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="user_id"
             android:defaultValue="0"
             app:argType="integer" />
         <action
-            android:id="@+id/action_albumsListFragment_to_albumDialogFragment"
+            android:id="@+id/action_albumListFragment_to_albumDialogFragment"
             app:destination="@id/albumDialogFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/photoListFragment"
@@ -50,14 +62,14 @@
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_photoListFragment_to_photoDetailFragment"
             app:destination="@id/photoDetailFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/userListFragment"
@@ -65,18 +77,18 @@
         android:label="UserListFragment">
         <action
             android:id="@+id/action_userListFragment_to_albumsListFragment"
-            app:destination="@id/albumsListFragment"
+            app:destination="@id/albumListFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_userListFragment_to_userDialogFragment"
             app:destination="@id/userDialogFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <dialog
         android:id="@+id/albumDialogFragment"
@@ -114,4 +126,42 @@
             android:defaultValue="0"
             app:argType="integer" />
     </dialog>
+    <fragment
+        android:id="@+id/albumFragment"
+        android:name="com.antgut.myapplication.features.album.presentation.AlbumFragment"
+        android:label="AlbumFragment">
+        <action
+            android:id="@+id/action_albumFragment_to_albumDialogFragment"
+            app:destination="@id/albumDialogFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_albumFragment_to_photoListFragment"
+            app:destination="@id/photoListFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/photoFragment"
+        android:name="com.antgut.myapplication.features.photo.presentiaton.PhotoFragment"
+        android:label="PhotoFragment">
+        <action
+            android:id="@+id/action_photoFragment_to_photoDetailFragment"
+            app:destination="@id/photoDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_photoFragment_to_photoDialogFragment"
+            app:destination="@id/photoDialogFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 </navigation>

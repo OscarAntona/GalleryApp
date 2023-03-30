@@ -4,11 +4,11 @@ import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.funcional.Either
 import javax.inject.Inject
 
-class GetAlbumsUseCase @Inject constructor(
+class GetAllAlbumsUseCase @Inject constructor(
     private val albumRepository: AlbumRepository
 ) {
-    suspend operator fun invoke(userId: Int): Either<ErrorApp, List<Album>> {
-        return albumRepository.getAlbums(userId)
+    suspend operator fun invoke(): Either<ErrorApp, List<Album>> {
+        return albumRepository.getAllAlbums()
     }
 
 }

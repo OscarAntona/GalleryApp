@@ -43,7 +43,7 @@ class PhotoListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObservers()
-        viewModel.loadPhotos(args.albumId)
+        viewModel.loadPhotosByAlbum(args.albumId)
     }
 
     private fun setupView() {

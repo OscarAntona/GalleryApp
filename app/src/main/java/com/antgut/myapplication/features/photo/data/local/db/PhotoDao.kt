@@ -13,7 +13,7 @@ interface PhotoDao {
     @Query("DELETE FROM $TABLE_NAME WHERE $PK_NAME = :photoId")
     suspend fun deletePhoto(photoId: Int)
 
-    @Query("SELECT * FROM $TABLE_NAME WHERE $PK_NAME = :albumId")
+    @Query("SELECT * FROM $TABLE_NAME WHERE $ALBUM_KEY = :albumId")
     suspend fun getPhotosByAlbum(albumId: Int): List<PhotoEntity>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $PK_NAME = :photoId")

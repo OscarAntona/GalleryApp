@@ -14,10 +14,10 @@ class AlbumDataRepository @Inject constructor(
     private val remoteDataSource: AlbumRemoteDataSource,
     private val localDataSource: AlbumLocalDataSource
 ) : AlbumRepository {
-    override suspend fun getAlbums(userId: Int): Either<ErrorApp, List<Album>> {
+    override suspend fun getAllAlbums(): Either<ErrorApp, List<Album>> {
         val localAlbums = localDataSource.getAlbums()
         return if (localAlbums.isEmpty()) {
-            return remoteDataSource.getAlbums(userId).map { remoteAlbums ->
+            return remoteDataSource.getAlbums().map { remoteAlbums ->
                 localDataSource.clear()
                 localDataSource.saveAlbums(remoteAlbums)
                 remoteAlbums
@@ -41,11 +41,15 @@ class AlbumDataRepository @Inject constructor(
     }
 
     override suspend fun getAlbumsByUser(userId: Int): Either<ErrorApp, List<Album>> {
-        val localAlbum = localDataSource.getAlbumsByUser(userId)
-        return if (localAlbum.isLeft()) {
-            ErrorApp.DataError.left()
+        val localAlbums = localDataSource.getAlbumsByUser(userId)
+        return if (localAlbums.isLeft()) {
+            return remoteDataSource.getAlbums().map { remoteAlbums ->
+                localDataSource.clear()
+                localDataSource.saveAlbums(remoteAlbums)
+                remoteAlbums
+            }
         } else {
-            localAlbum
+            localAlbums
         }
     }
 

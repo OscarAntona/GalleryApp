@@ -75,6 +75,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/inspect_delete"
         android:text="@string/delete_button"
+        android:theme="@style/ThemeOverlay.Material3.Button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/thumbnail_layout" />
 
@@ -84,6 +85,7 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/inspect_save"
         android:text="@string/save_button"
+        android:theme="@style/ThemeOverlay.Material3.Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/thumbnail_layout" />
 

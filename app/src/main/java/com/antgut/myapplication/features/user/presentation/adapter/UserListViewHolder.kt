@@ -7,7 +7,7 @@ import com.antgut.myapplication.features.user.domain.User
 
 class UserListViewHolder(private val view: View) :
     RecyclerView.ViewHolder(view) {
-    fun bind(user: User, itemClick: ((Int) -> Unit)?,onLongClick: ((Int) -> Unit)?) {
+    fun bind(user: User, itemClick: ((Int) -> Unit)?, onLongClick: ((Int) -> Unit)?) {
         val binding = ViewItemUserBinding.bind(view)
         binding.labelUserName.text = user.name
         binding.labelUserUsername.text = user.username

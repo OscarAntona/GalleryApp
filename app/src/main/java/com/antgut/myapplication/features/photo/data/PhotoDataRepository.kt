@@ -14,10 +14,23 @@ class PhotoDataRepository @Inject constructor(
     private val remoteDataSource: PhotoRemoteDataSource,
     private val localDataSource: PhotoLocalDataSource
 ) : PhotoRepository {
-    override suspend fun getPhotos(albumId: Int): Either<ErrorApp, List<Photo>> {
+    override suspend fun getPhotosByAlbum(albumId: Int): Either<ErrorApp, List<Photo>> {
+        val localPhotos = localDataSource.getPhotosByAlbum(albumId)
+        return if (localPhotos.isLeft()) {
+            return remoteDataSource.getPhotos().map { remotePhotos ->
+                localDataSource.clear()
+                localDataSource.savePhotos(remotePhotos)
+                remotePhotos
+            }
+        } else {
+            localPhotos
+        }
+    }
+
+    override suspend fun getAllPhotos(): Either<ErrorApp, List<Photo>> {
         val localPhotos = localDataSource.getPhotos()
         return if (localPhotos.isEmpty()) {
-            return remoteDataSource.getPhotos(albumId).map { remotePhotos ->
+            return remoteDataSource.getPhotos().map { remotePhotos ->
                 localDataSource.clear()
                 localDataSource.savePhotos(remotePhotos)
                 remotePhotos
@@ -28,25 +41,16 @@ class PhotoDataRepository @Inject constructor(
     }
 
     override suspend fun getPhoto(photoId: Int): Either<ErrorApp, Photo> {
-        val localPhoto = localDataSource.getPhotoById(photoId)
-        return if (localPhoto.isLeft()) {
+        val localAlbum = localDataSource.getPhotoById(photoId)
+        return if (localAlbum.isLeft()) {
             ErrorApp.DataError.left()
         } else {
-            localPhoto
+            localAlbum
         }
     }
 
     override suspend fun savePhoto(photo: Photo) {
         localDataSource.savePhoto(photo)
-    }
-
-    override suspend fun getPhotosByAlbum(albumId: Int): Either<ErrorApp, List<Photo>> {
-        val localPhoto = localDataSource.getPhotosByAlbum(albumId)
-        return if (localPhoto.isLeft()) {
-            ErrorApp.DataError.left()
-        } else {
-            localPhoto
-        }
     }
 
     override suspend fun updatePhoto(photo: Photo): Either<ErrorApp, Boolean> {

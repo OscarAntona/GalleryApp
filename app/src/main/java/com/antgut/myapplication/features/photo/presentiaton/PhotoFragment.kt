@@ -1,4 +1,4 @@
-package com.antgut.myapplication.features.album.presentation
+package com.antgut.myapplication.features.photo.presentiaton
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,34 +8,32 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.antgut.myapplication.R
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.extensions.hideWithDelay
 import com.antgut.myapplication.app.extensions.showWithDelay
-import com.antgut.myapplication.databinding.FragmentAlbumListBinding
-import com.antgut.myapplication.features.album.presentation.adapter.AlbumListAdapter
+import com.antgut.myapplication.databinding.FragmentPhotoListBinding
+import com.antgut.myapplication.features.photo.presentiaton.adapter.PhotoListAdapter
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AlbumListFragment : Fragment() {
+class PhotoFragment : Fragment() {
     private var skeleton: Skeleton? = null
-    private var _binding: FragmentAlbumListBinding? = null
-    private val binding: FragmentAlbumListBinding
+    private var _binding: FragmentPhotoListBinding? = null
+    private val binding: FragmentPhotoListBinding
         get() = _binding!!
-    private val albumAdapter = AlbumListAdapter()
-    private val viewModel by viewModels<AlbumListViewModel>()
-    private val args: AlbumListFragmentArgs by navArgs()
+    private val photoAdapter = PhotoListAdapter()
+    private val viewModel by viewModels<PhotoViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAlbumListBinding.inflate(inflater)
+        _binding = FragmentPhotoListBinding.inflate(inflater)
         setupView()
         return binding.root
     }
@@ -43,59 +41,58 @@ class AlbumListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObservers()
-        viewModel.loadAlbums(args.userId)
+        viewModel.loadAllPhotos()
     }
 
     private fun setupView() {
         binding.apply {
-            layoutToolbar.viewToolbar.title = "Albums"
+            layoutToolbar.viewToolbar.title = "Photos"
             layoutToolbar.viewToolbar.apply {
                 setNavigationOnClickListener {
                     findNavController().navigateUp()
                 }
             }
-            albumList.apply {
-                adapter = albumAdapter
+            photoList.apply {
+                adapter = photoAdapter
                 layoutManager = GridLayoutManager(requireContext(), 2)
-                skeleton = applySkeleton(R.layout.view_item_album)
+                skeleton = applySkeleton(R.layout.view_item_photo)
             }
         }
     }
 
     private fun setupObservers() {
-        val albumListSubscriber =
-            Observer<AlbumListViewModel.UiModel> { uiState ->
-                if (uiState.isLoading) {
+        val photoSubscriber =
+            Observer<PhotoViewModel.UiModel> { uiModel ->
+                if (uiModel.isLoading) {
                     skeleton?.showWithDelay()
                 } else {
                     skeleton?.hideWithDelay()
-                    uiState.error?.let {
+                    uiModel.error?.let {
                         ErrorApp.DataError
                     } ?: run {
-                        albumAdapter.submitList(uiState.albumList)
-                        albumAdapter.setOnClickItem {
-                            navigateToPhoto(it)
+                        photoAdapter.submitList(uiModel.photoList)
+                        photoAdapter.setOnClickItem {
+                            navigateToPhotoDetail(it)
                         }
-                        albumAdapter.onLongClickItem {
-                            navigateToDialog(it)
+                        photoAdapter.onLongClickItem {
+                            navigateToPhotoDialog(it)
                         }
-
                     }
                 }
 
             }
-        viewModel.uiModel.observe(viewLifecycleOwner, albumListSubscriber)
+        viewModel.uiModel.observe(viewLifecycleOwner, photoSubscriber)
     }
 
-    private fun navigateToDialog(albumId: Int) {
+    private fun navigateToPhotoDetail(photoId: Int) {
         findNavController().navigate(
-            AlbumListFragmentDirections.actionAlbumListFragmentToAlbumDialogFragment(albumId)
+            PhotoFragmentDirections.actionPhotoFragmentToPhotoDetailFragment(photoId)
         )
     }
 
-    private fun navigateToPhoto(albumId: Int) {
+    private fun navigateToPhotoDialog(photoId: Int) {
         findNavController().navigate(
-            AlbumListFragmentDirections.actionAlbumListFragmentToPhotoListFragment(albumId)
+            PhotoFragmentDirections.actionPhotoFragmentToPhotoDialogFragment(photoId)
         )
     }
 }

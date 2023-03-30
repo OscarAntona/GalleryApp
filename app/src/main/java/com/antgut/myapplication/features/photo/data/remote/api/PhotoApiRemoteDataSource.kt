@@ -10,9 +10,9 @@ import javax.inject.Inject
 class PhotoApiRemoteDataSource @Inject constructor(val photoApiEndPoints: PhotoApiEndPoints) :
     PhotoRemoteDataSource {
 
-    override suspend fun getPhotos(albumId: Int): Either<ErrorApp, List<Photo>> {
+    override suspend fun getPhotos(): Either<ErrorApp, List<Photo>> {
         return apiCall {
-            photoApiEndPoints.getPhotos(albumId)
+            photoApiEndPoints.getPhotos()
         }.map { it ->
             it.map { it.toDomain() }
         }

@@ -16,7 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UserDialogFragment: BottomSheetDialogFragment() {
+class UserDialogFragment : BottomSheetDialogFragment() {
     private val viewModel by viewModels<UserDialogViewModel>()
     private var _binding: FragmentUserDialogBinding? = null
     private val binding: FragmentUserDialogBinding
@@ -35,9 +35,10 @@ class UserDialogFragment: BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpObserver()
-        Log.d("@dev",args.userId.toString())
+        Log.d("@dev", args.userId.toString())
         viewModel.getUser(args.userId)
     }
+
     private fun setUpView() {
         binding.apply {
 

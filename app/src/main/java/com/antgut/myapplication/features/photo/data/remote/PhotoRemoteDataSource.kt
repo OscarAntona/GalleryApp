@@ -5,5 +5,5 @@ import com.antgut.myapplication.app.funcional.Either
 import com.antgut.myapplication.features.photo.domain.Photo
 
 interface PhotoRemoteDataSource {
-    suspend fun getPhotos(albumId: Int): Either<ErrorApp, List<Photo>>
+    suspend fun getPhotos(): Either<ErrorApp, List<Photo>>
 }

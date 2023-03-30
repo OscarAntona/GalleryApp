@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import com.antgut.myapplication.R
 import com.antgut.myapplication.features.user.domain.User
 
-class UserListAdapter: ListAdapter<User, UserListViewHolder>
+class UserListAdapter : ListAdapter<User, UserListViewHolder>
     (AsyncDifferConfig.Builder(UserListDiff()).build()) {
     private var itemClick: ((Int) -> Unit)? = null
     private var onLongClick: ((Int) -> Unit)? = null
@@ -15,6 +15,7 @@ class UserListAdapter: ListAdapter<User, UserListViewHolder>
     fun setOnClickItem(itemClick: (Int) -> Unit) {
         this.itemClick = itemClick
     }
+
     fun onLongClickItem(itemClick: (Int) -> Unit) {
         this.onLongClick = itemClick
     }

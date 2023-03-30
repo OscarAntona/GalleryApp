@@ -17,16 +17,16 @@ class UserListViewModel @Inject constructor(
     private val getUsersUseCase: GetUsersUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableLiveData<UiState>()
-    val uiState: LiveData<UiState>
-        get() = _uiState
+    private val _uiModel = MutableLiveData<UiModel>()
+    val uiModel: LiveData<UiModel>
+        get() = _uiModel
 
     fun loadUsers() {
-        _uiState.value = UiState(isLoading = true)
+        _uiModel.value = UiModel(isLoading = true)
         viewModelScope.launch(Dispatchers.IO) {
             getUsersUseCase.invoke().apply {
-                _uiState.postValue(
-                    UiState(
+                _uiModel.postValue(
+                    UiModel(
                         isLoading = false,
                         error = this.swap().getOrNull(),
                         userList = this.getOrNull()
@@ -36,7 +36,7 @@ class UserListViewModel @Inject constructor(
         }
     }
 
-    data class UiState(
+    data class UiModel(
         val isLoading: Boolean = false,
         val error: ErrorApp? = null,
         val userList: List<User>? = null

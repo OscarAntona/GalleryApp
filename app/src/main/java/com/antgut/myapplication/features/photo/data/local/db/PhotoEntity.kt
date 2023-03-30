@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 
 const val TABLE_NAME = "photo"
 const val PK_NAME = "id"
+const val ALBUM_KEY = "albumId"
 
 @Entity(tableName = TABLE_NAME)
 data class PhotoEntity(

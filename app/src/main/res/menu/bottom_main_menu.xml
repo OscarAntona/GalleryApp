@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/users"
+        android:id="@+id/userListFragment"
         android:icon="@drawable/ic_users"
         android:title="@string/menu_users_title" />
     <item
-        android:id="@+id/albums"
+        android:id="@+id/albumFragment"
         android:icon="@drawable/ic_album"
         android:title="@string/menu_albums_title" />
     <item
-        android:id="@+id/photos"
+        android:id="@+id/photoFragment"
         android:icon="@drawable/ic_photo"
         android:title="@string/menu_photos_title" />
 </menu>
