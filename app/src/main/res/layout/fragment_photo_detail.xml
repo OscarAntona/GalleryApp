@@ -14,6 +14,20 @@
             android:id="@+id/layout_toolbar"
             layout="@layout/view_toolbar" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_title_photo"
+            style="@style/MaterialAlertDialog.Material3.Title.Text"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:ellipsize="end"
+            android:padding="@dimen/spacing_s"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@id/photo_url"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_toolbar"
+            tools:text="@tools:sample/lorem/random" />
+
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/photo_url"
             style="@style/ImageRoundCorner"
@@ -21,6 +35,7 @@
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
             android:elevation="@dimen/spacing_s"
+            android:padding="@dimen/spacing_l"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.antgut.myapplication.R
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.extensions.hideWithDelay
@@ -48,12 +48,15 @@ class PhotoListFragment : Fragment() {
 
     private fun setupView() {
         binding.apply {
+            layoutToolbar.viewToolbar.title = "Photos"
+            layoutToolbar.viewToolbar.apply {
+                setNavigationOnClickListener {
+                    findNavController().navigateUp()
+                }
+            }
             photoList.apply {
                 adapter = photoAdapter
-                layoutManager = LinearLayoutManager(
-                    requireContext(),
-                    LinearLayoutManager.VERTICAL, false
-                )
+                layoutManager = GridLayoutManager(requireContext(), 2)
                 skeleton = applySkeleton(R.layout.view_item_photo)
             }
         }

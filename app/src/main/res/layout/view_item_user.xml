@@ -2,6 +2,7 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Widget.Material3.CardView.Elevated"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/spacing_l"
@@ -20,13 +21,12 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
-            android:maxLines="1"
-            android:minLines="1"
             android:textSize="24sp"
+            app:layout_constraintBottom_toTopOf="@id/label_user_username"
             app:layout_constraintEnd_toStartOf="@id/icon_arrow"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@tools:sample/lorem/random" />
+            tools:text="@tools:sample/lorem" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/label_user_username"
@@ -36,6 +36,7 @@
             android:maxLines="1"
             android:minLines="1"
             android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@id/label_user_email"
             app:layout_constraintEnd_toStartOf="@id/icon_arrow"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/label_user_name"

@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.extensions.hideWithDelay
@@ -32,6 +33,7 @@ class PhotoDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentPhotoDetailBinding.inflate(inflater)
+        setupView()
         return binding.root
     }
 
@@ -39,6 +41,17 @@ class PhotoDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupObservers()
         viewModel.loadPhoto(args.photoId)
+    }
+
+    private fun setupView() {
+        binding.apply {
+            layoutToolbar.viewToolbar.title = "Photo"
+            layoutToolbar.viewToolbar.apply {
+                setNavigationOnClickListener {
+                    findNavController().navigateUp()
+                }
+            }
+        }
     }
 
     private fun setupObservers() {
@@ -63,6 +76,7 @@ class PhotoDetailFragment : Fragment() {
         binding.apply {
             photoUrl.apply {
                 photoUrl.loadUrl(photo.url)
+                labelTitlePhoto.text = photo.title
             }
         }
     }

@@ -10,7 +10,6 @@ class PhotoListViewHolder(private val view: View) :
     RecyclerView.ViewHolder(view) {
     fun bind(photo: Photo, itemClick: ((Int) -> Unit)?, onLongClick: ((Int) -> Unit)?) {
         val binding = ViewItemPhotoBinding.bind(view)
-        binding.labelTitlePhoto.text = photo.title
         binding.photoThumbnail.loadUrl(photo.thumbnailUrl)
         view.setOnClickListener {
             itemClick?.invoke(photo.id)

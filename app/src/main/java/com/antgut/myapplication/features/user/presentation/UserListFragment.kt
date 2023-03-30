@@ -46,6 +46,10 @@ class UserListFragment : Fragment() {
 
     private fun setupView() {
         binding?.apply {
+            layoutToolbar.viewToolbar.title = "Users"
+            layoutToolbar.viewToolbar.apply {
+                navigationIcon = null
+            }
             userList.apply {
                 adapter = userAdapter
                 layoutManager =

@@ -38,7 +38,6 @@ class PhotoDialogFragment : BottomSheetDialogFragment() {
 
     private fun setUpView() {
         binding.apply {
-
             saveButton.setOnClickListener {
                 val photo = viewModel.uiModel.value?.photo?.let { photo ->
                     Photo(
