@@ -17,7 +17,6 @@
         <action
             android:id="@+id/action_albumsListFragment_to_albumDialogFragment"
             app:destination="@id/albumDialogFragment" />
-
     </fragment>
     <fragment
         android:id="@+id/photoListFragment"
@@ -27,8 +26,13 @@
             android:name="album_id"
             android:defaultValue="0"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_photoListFragment_to_photoDialogFragment"
+            app:destination="@id/photoDialogFragment" />
+        <action
+            android:id="@+id/action_photoListFragment_to_photoDetailFragment"
+            app:destination="@id/photoDetailFragment" />
     </fragment>
-
     <fragment
         android:id="@+id/userListFragment"
         android:name="com.antgut.myapplication.features.user.presentation.UserListFragment"
@@ -46,4 +50,22 @@
             android:defaultValue="0"
             app:argType="integer" />
     </dialog>
+    <dialog
+        android:id="@+id/photoDialogFragment"
+        android:name="com.antgut.myapplication.features.photo.presentiaton.PhotoDialogFragment"
+        android:label="PhotoDialogFragment">
+        <argument
+            android:name="photo_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </dialog>
+    <fragment
+        android:id="@+id/photoDetailFragment"
+        android:name="com.antgut.myapplication.features.photo.presentiaton.PhotoDetailFragment"
+        android:label="PhotoDetailFragment">
+        <argument
+            android:name="photo_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
 </navigation>

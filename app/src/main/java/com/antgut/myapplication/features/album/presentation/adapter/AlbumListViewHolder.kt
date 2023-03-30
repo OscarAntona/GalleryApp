@@ -7,7 +7,7 @@ import com.antgut.myapplication.features.album.domain.Album
 
 class AlbumListViewHolder(private val view: View) :
     RecyclerView.ViewHolder(view) {
-    fun bind(album: Album, itemClick: ((Int) -> Unit)?, onLongClick:((Int) -> Unit)?) {
+    fun bind(album: Album, itemClick: ((Int) -> Unit)?, onLongClick: ((Int) -> Unit)?) {
         val binding = ViewItemAlbumBinding.bind(view)
         binding.labelTitleAlbum.text = album.title
         view.setOnClickListener {

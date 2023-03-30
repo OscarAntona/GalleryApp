@@ -15,7 +15,6 @@ import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.extensions.hideWithDelay
 import com.antgut.myapplication.app.extensions.showWithDelay
 import com.antgut.myapplication.databinding.FragmentAlbumListBinding
-import com.antgut.myapplication.features.album.domain.Album
 import com.antgut.myapplication.features.album.presentation.adapter.AlbumListAdapter
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
@@ -24,7 +23,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class AlbumListFragment : Fragment() {
     private var skeleton: Skeleton? = null
-    private var binding: FragmentAlbumListBinding? = null
+    private var _binding: FragmentAlbumListBinding? = null
+    private val binding: FragmentAlbumListBinding
+        get() = _binding!!
     private val albumAdapter = AlbumListAdapter()
     private val viewModel by viewModels<AlbumListViewModel>()
     private val args: AlbumListFragmentArgs by navArgs()
@@ -33,10 +34,10 @@ class AlbumListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentAlbumListBinding.inflate(inflater)
+    ): View {
+        _binding = FragmentAlbumListBinding.inflate(inflater)
         setupView()
-        return binding?.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,7 +47,7 @@ class AlbumListFragment : Fragment() {
     }
 
     private fun setupView() {
-        binding?.apply {
+        binding.apply {
             albumList.apply {
                 adapter = albumAdapter
                 layoutManager = LinearLayoutManager(
@@ -82,6 +83,7 @@ class AlbumListFragment : Fragment() {
             }
         viewModel.uiState.observe(viewLifecycleOwner, albumListSubscriber)
     }
+
     private fun navigateToDialog(albumId: Int) {
         findNavController().navigate(
             AlbumListFragmentDirections.actionAlbumsListFragmentToAlbumDialogFragment(albumId)

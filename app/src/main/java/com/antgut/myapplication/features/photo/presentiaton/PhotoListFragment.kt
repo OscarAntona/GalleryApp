@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.antgut.myapplication.R
@@ -22,10 +23,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PhotoListFragment : Fragment() {
     private var skeleton: Skeleton? = null
-    private var binding: FragmentPhotoListBinding? = null
-    private val photoAdapter = PhotoListAdapter {
-
-    }
+    private var _binding: FragmentPhotoListBinding? = null
+    private val binding: FragmentPhotoListBinding
+        get() = _binding!!
+    private val photoAdapter = PhotoListAdapter()
     private val viewModel by viewModels<PhotoListViewModel>()
     private val args: PhotoListFragmentArgs by navArgs()
 
@@ -33,10 +34,10 @@ class PhotoListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentPhotoListBinding.inflate(inflater)
+    ): View {
+        _binding = FragmentPhotoListBinding.inflate(inflater)
         setupView()
-        return binding?.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,7 +47,7 @@ class PhotoListFragment : Fragment() {
     }
 
     private fun setupView() {
-        binding?.apply {
+        binding.apply {
             photoList.apply {
                 adapter = photoAdapter
                 layoutManager = LinearLayoutManager(
@@ -60,28 +61,37 @@ class PhotoListFragment : Fragment() {
 
     private fun setupObservers() {
         val photoListSubscriber =
-            Observer<PhotoListViewModel.UiState> { uiState ->
-                if (uiState.isLoading) {
+            Observer<PhotoListViewModel.UiModel> { uiModel ->
+                if (uiModel.isLoading) {
                     skeleton?.showWithDelay()
                 } else {
                     skeleton?.hideWithDelay()
-                    uiState.error?.let {
+                    uiModel.error?.let {
                         ErrorApp.DataError
                     } ?: run {
-                        photoAdapter.submitList(uiState.photoList)
+                        photoAdapter.submitList(uiModel.photoList)
                         photoAdapter.setOnClickItem {
-                            //navigateToPhotoDetail(it)
+                            navigateToPhotoDetail(it)
+                        }
+                        photoAdapter.onLongClickItem {
+                            navigateToPhotoDialog(it)
                         }
                     }
                 }
 
             }
-        viewModel.uiState.observe(viewLifecycleOwner, photoListSubscriber)
+        viewModel.uiModel.observe(viewLifecycleOwner, photoListSubscriber)
     }
 
-    /*private fun navigateToPhotoDetail(photoId: Int) {
+    private fun navigateToPhotoDetail(photoId: Int) {
         findNavController().navigate(
-            PhotoListFragmentDirections.actionPhotoListFragmentToPhotoDetail(photoId)
+            PhotoListFragmentDirections.actionPhotoListFragmentToPhotoDetailFragment(photoId)
         )
-    }*/
+    }
+
+    private fun navigateToPhotoDialog(photoId: Int) {
+        findNavController().navigate(
+            PhotoListFragmentDirections.actionPhotoListFragmentToPhotoDialogFragment(photoId)
+        )
+    }
 }

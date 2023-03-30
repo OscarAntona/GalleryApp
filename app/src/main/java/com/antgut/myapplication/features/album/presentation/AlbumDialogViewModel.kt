@@ -26,58 +26,51 @@ class AlbumDialogViewModel @Inject constructor(
 
     fun saveAlbum(album: Album) {
         viewModelScope.launch(Dispatchers.IO) {
-                saveAlbumUseCase(album).apply {
-                    _uiModel.postValue(
-                        UiModel(
-                            isSuccess = false,
-                            isSaved = true,
-                            album = album
-                           )
-                        )
-                }
+            saveAlbumUseCase(album).apply {
+                _uiModel.postValue(
+                    UiModel(
+                        isSuccess = false,
+                        isSaved = true,
+                        album = album
+                    )
+                )
             }
         }
+    }
 
     fun getAlbum(albumId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             getAlbumUseCase.invoke(albumId).apply {
                 _uiModel.postValue(
                     UiModel(
-                        isSuccess=false,
+                        isSuccess = false,
                         isSaved = false,
                         error = this.swap().getOrNull(),
                         album = this.getOrNull()
                     )
                 )
             }
-            getAlbumUseCase(albumId).map { album1 ->
-                _uiModel.postValue(UiModel(album = album1))
+            getAlbumUseCase(albumId).map { album ->
+                _uiModel.postValue(UiModel(album = album))
             }
         }
     }
 
     fun deleteAlbum(albumId: Int) {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             deleteAlbumUseCase(albumId).fold(
-                {errorResponse(it)},
-                {successDeleteAlbum(it)}
+                { errorResponse(it) },
+                { successDeleteAlbum(it) }
             )
         }
     }
+
     private fun errorResponse(errorApp: ErrorApp) {
         _uiModel.postValue(UiModel(error = errorApp))
     }
 
-    private fun successSaveAlbum(isSaved: Boolean) {
-        _uiModel.postValue(UiModel(isSaved = isSaved))
-    }
-
     private fun successDeleteAlbum(isSuccess: Boolean) {
         _uiModel.postValue(UiModel(isSuccess = isSuccess))
-    }
-
-    private fun successGetAlbum(album: Album) {
-        _uiModel.postValue(UiModel(album = album))
     }
 
     data class UiModel(

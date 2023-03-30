@@ -11,12 +11,13 @@ import com.antgut.myapplication.features.album.domain.Album
 class AlbumListAdapter : ListAdapter<Album, AlbumListViewHolder>
     (AsyncDifferConfig.Builder(AlbumListDiff()).build()) {
     private var itemClick: ((Int) -> Unit)? = null
-    private var onLongClick:((Int) -> Unit)? = null
+    private var onLongClick: ((Int) -> Unit)? = null
 
     fun setOnClickItem(itemClick: (Int) -> Unit) {
         this.itemClick = itemClick
     }
-    fun onLongClickItem(itemClick: (Int) -> Unit){
+
+    fun onLongClickItem(itemClick: (Int) -> Unit) {
         this.onLongClick = itemClick
     }
 

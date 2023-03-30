@@ -15,7 +15,7 @@
             layout="@layout/view_toolbar" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/photo_thumbnail"
+            android:id="@+id/photo_url"
             style="@style/ImageRoundCorner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
