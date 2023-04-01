@@ -6,6 +6,6 @@ import javax.inject.Inject
 
 class DeleteUserUseCase @Inject constructor(private val userRepository: UserRepository) {
     suspend operator fun invoke(userId: Int): Either<ErrorApp, Boolean> {
-        return userRepository.deleteUser(userId)
+        return userRepository.deleteServerUser(userId)
     }
 }

@@ -4,11 +4,11 @@ import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.funcional.Either
 import com.antgut.myapplication.app.funcional.left
 import com.antgut.myapplication.app.funcional.right
-import com.antgut.myapplication.features.user.data.local.UserLocalDataSource
+import com.antgut.myapplication.features.user.data.local.ServerUserLocalDataSource
 import com.antgut.myapplication.features.user.domain.User
 import javax.inject.Inject
 
-class UserDbLocalDataSource @Inject constructor(private val dao: UserDao) : UserLocalDataSource {
+class ServerServerUserDbLocalDataSource @Inject constructor(private val dao: ServerUserDao) : ServerUserLocalDataSource {
     override suspend fun saveUsers(user: List<User>) {
         user.forEach {
             dao.saveUser(it.toEntity())
@@ -20,9 +20,11 @@ class UserDbLocalDataSource @Inject constructor(private val dao: UserDao) : User
     }
 
     override suspend fun updateUser(user: User): Either<ErrorApp, Boolean> {
-        return dao.getUserById(user.id)?.apply {
-            dao.saveUser(user.toEntity())
-        }?.let { true.right() } ?: ErrorApp.DataError.left()
+        return user.id?.let {
+            dao.getUserById(it)?.apply {
+                dao.saveUser(user.toEntity())
+            }?.let { true.right() }
+        } ?: ErrorApp.DataError.left()
     }
 
     override suspend fun getUsers(): List<User> {

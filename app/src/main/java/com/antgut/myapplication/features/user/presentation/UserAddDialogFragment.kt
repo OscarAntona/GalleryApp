@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -16,13 +17,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UserDialogFragment : BottomSheetDialogFragment() {
-    private val viewModel by viewModels<UserDialogViewModel>()
+class UserAddDialogFragment : BottomSheetDialogFragment() {
+    private val viewModel by viewModels<UserAddDialogViewModel>()
     private var _binding: FragmentUserDialogBinding? = null
     private val binding: FragmentUserDialogBinding
         get() = _binding!!
-
-    private val args: UserDialogFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -35,44 +34,28 @@ class UserDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpObserver()
-        viewModel.getUser(args.userId)
     }
 
     private fun setUpView() {
         binding.apply {
 
             saveButton.setOnClickListener {
-                val user = viewModel.uiModel.value?.user?.let { user ->
-                    User(
-                        name = inputName.text.toString(),
-                        id = args.userId,
-                        username = user.username,
-                        email = user.email
-                    )
-                }
-                if (user != null) {
-                    viewModel.saveUser(user)
-                }
+                viewModel.saveUser(user = User(
+                    name = inputName.text.toString(),
+                    username = inputUsername.text.toString(),
+                    email = inputEmail.text.toString()))
                 findNavController().navigateUp()
                 findNavController().navigateUp()
             }
-            deleteButton.setOnClickListener {
-                viewModel.deleteUser(args.userId)
-                findNavController().navigateUp()
-            }
+            deleteButton.visibility = View.GONE
         }
     }
-
     private fun setUpObserver() {
-        val subscriber = Observer<UserDialogViewModel.UiModel> {
+        val subscriber = Observer<UserAddDialogViewModel.UiModel> {
             when {
-                it.user != null -> bind(it)
                 it.isSaved -> {
+                    Log.d("@dev", "hula")
                     view?.showSnackBar("Se ha guardado correctamente")
-                }
-                it.isSuccess -> {
-                    view?.showSnackBar("Se ha borrado correctamente")
-                    findNavController().navigateUp()
                 }
                 else -> {
                     view?.showSnackBar("Se ha producido un error")
@@ -81,15 +64,4 @@ class UserDialogFragment : BottomSheetDialogFragment() {
         }
         viewModel.uiModel.observe(viewLifecycleOwner, subscriber)
     }
-
-    private fun bind(model: UserDialogViewModel.UiModel) {
-        binding.apply {
-            model.user?.let { user ->
-                inputName.setText(user.name)
-                inputEmail.setText(user.email)
-                inputUsername.setText(user.username)
-            }
-        }
-    }
-
 }

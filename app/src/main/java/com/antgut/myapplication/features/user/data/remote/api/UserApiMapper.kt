@@ -5,9 +5,9 @@ import com.antgut.myapplication.features.user.domain.User
 
 fun UserApiModel.toDomain(): User {
     return User(
-        this.id,
-        this.name,
-        this.username,
-        this.email
+        serverId = this.id,
+        name=this.name,
+        username = this.username,
+        email = this.email
     )
 }

@@ -22,7 +22,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class UserListFragment : Fragment() {
     private var skeleton: Skeleton? = null
-    private var binding: FragmentUserListBinding? = null
+    private var _binding: FragmentUserListBinding? = null
+    private val binding: FragmentUserListBinding
+        get() = _binding!!
     private val userAdapter = UserListAdapter()
     private val viewModel by viewModels<UserListViewModel>()
 
@@ -30,10 +32,10 @@ class UserListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentUserListBinding.inflate(inflater)
+    ): View {
+        _binding = FragmentUserListBinding.inflate(inflater)
         setupView()
-        return binding?.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,7 +45,7 @@ class UserListFragment : Fragment() {
     }
 
     private fun setupView() {
-        binding?.apply {
+        binding.apply {
             layoutToolbar.viewToolbar.title = "Users"
             layoutToolbar.viewToolbar.apply {
                 navigationIcon = null
@@ -75,11 +77,22 @@ class UserListFragment : Fragment() {
                             navigateToUserDialog(it)
                         }
                     }
+                    binding.apply {
+                        floatingActionButton.setOnClickListener {
+                        navigateToAddUserDialog()
+                        }
+                    }
                 }
 
             }
         viewModel.uiModel.observe(viewLifecycleOwner, userListSubscriber)
     }
+    private fun navigateToAddUserDialog() {
+        findNavController().navigate(
+            UserListFragmentDirections.actionUserListFragmentToUserAddDialogFragment()
+        )
+    }
+
 
     private fun navigateToUserDialog(userId: Int) {
         findNavController().navigate(

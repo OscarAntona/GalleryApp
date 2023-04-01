@@ -13,10 +13,10 @@ class UserListViewHolder(private val view: View) :
         binding.labelUserUsername.text = user.username
         binding.labelUserEmail.text = user.email
         view.setOnClickListener {
-            itemClick?.invoke(user.id)
+            user.id?.let { it1 -> itemClick?.invoke(it1) }
         }
         view.setOnLongClickListener {
-            onLongClick?.invoke(user.id)
+            user.id?.let { it1 -> onLongClick?.invoke(it1) }
             true
         }
     }

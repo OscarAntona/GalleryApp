@@ -1,8 +1,9 @@
 package com.antgut.myapplication.features.user.domain
 
 data class User(
-    val id: Int,
+    val id: Int?=null,
+    val serverId: Int?=null,
     val name: String,
     val username: String,
-    val email: String
+    val email: String,
 )

@@ -5,7 +5,7 @@ import com.antgut.myapplication.app.funcional.Either
 
 import com.antgut.myapplication.features.user.domain.User
 
-interface UserLocalDataSource {
+interface ServerUserLocalDataSource {
     suspend fun saveUsers(user: List<User>)
     suspend fun saveUser(user: User)
     suspend fun getUsers(): List<User>

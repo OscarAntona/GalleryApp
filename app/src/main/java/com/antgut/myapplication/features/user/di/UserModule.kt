@@ -1,8 +1,8 @@
 package com.antgut.myapplication.features.user.di
 
 import com.antgut.myapplication.features.user.data.UserDataRepository
-import com.antgut.myapplication.features.user.data.local.UserLocalDataSource
-import com.antgut.myapplication.features.user.data.local.db.UserDbLocalDataSource
+import com.antgut.myapplication.features.user.data.local.ServerUserLocalDataSource
+import com.antgut.myapplication.features.user.data.local.db.ServerServerUserDbLocalDataSource
 import com.antgut.myapplication.features.user.data.remote.UserRemoteDataSource
 import com.antgut.myapplication.features.user.data.remote.api.UserApiRemoteDataSource
 import com.antgut.myapplication.features.user.domain.UserRepository
@@ -21,5 +21,5 @@ abstract class UserModule {
     abstract fun bindUserRemoteRepository(repository: UserApiRemoteDataSource): UserRemoteDataSource
 
     @Binds
-    abstract fun bindUserLocalRepository(repository: UserDbLocalDataSource): UserLocalDataSource
+    abstract fun bindUserLocalRepository(repository: ServerServerUserDbLocalDataSource): ServerUserLocalDataSource
 }
