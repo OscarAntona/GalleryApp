@@ -9,9 +9,9 @@ interface ServerUserLocalDataSource {
     suspend fun saveUsers(user: List<User>)
     suspend fun saveUser(user: User)
     suspend fun getUsers(): List<User>
-    suspend fun getUserById(userId: Int): Either<ErrorApp, User>
+    suspend fun getUserById(id: Int): Either<ErrorApp, User>
     suspend fun updateUser(user: User): Either<ErrorApp, Boolean>
-    suspend fun deleteUser(userId: Int): Either<ErrorApp, Boolean>
+    suspend fun deleteUser(id: Int): Either<ErrorApp, Boolean>
     suspend fun clear()
 
 }

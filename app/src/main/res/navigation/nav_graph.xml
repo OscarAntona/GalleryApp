@@ -37,7 +37,7 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
         <argument
-            android:name="user_id"
+            android:name="id"
             android:defaultValue="0"
             app:argType="integer" />
         <action

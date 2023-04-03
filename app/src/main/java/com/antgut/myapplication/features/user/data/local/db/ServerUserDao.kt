@@ -10,11 +10,11 @@ interface ServerUserDao {
     @Query("DELETE FROM $TABLE_REMOTE_USERS_NAME")
     fun deleteAllUser()
 
-    @Query("DELETE FROM $TABLE_REMOTE_USERS_NAME WHERE $REMOTE_USER_KEY = :userId")
-    suspend fun deleteUser(userId: Int)
+    @Query("DELETE FROM $TABLE_REMOTE_USERS_NAME WHERE id = :id")
+    suspend fun deleteUser(id: Int)
 
-    @Query("SELECT * FROM $TABLE_REMOTE_USERS_NAME WHERE $REMOTE_USER_KEY= :userId")
-    suspend fun getUserById(userId: Int): ServerUserEntity?
+    @Query("SELECT * FROM $TABLE_REMOTE_USERS_NAME WHERE id = :id")
+    suspend fun getUserById(id: Int): ServerUserEntity?
 
     @Query("SELECT * FROM $TABLE_REMOTE_USERS_NAME")
     suspend fun getAllUser(): List<ServerUserEntity>

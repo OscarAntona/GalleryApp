@@ -94,15 +94,15 @@ class UserListFragment : Fragment() {
     }
 
 
-    private fun navigateToUserDialog(userId: Int) {
+    private fun navigateToUserDialog(id: Int) {
         findNavController().navigate(
-            UserListFragmentDirections.actionUserListFragmentToUserDialogFragment(userId)
+            UserListFragmentDirections.actionUserListFragmentToUserDialogFragment(id)
         )
     }
 
-    private fun navigateToAlbum(userId: Int) {
+    private fun navigateToAlbum(id: Int) {
         findNavController().navigate(
-            UserListFragmentDirections.actionUserListFragmentToAlbumsListFragment(userId)
+            UserListFragmentDirections.actionUserListFragmentToAlbumsListFragment(id)
         )
     }
 }

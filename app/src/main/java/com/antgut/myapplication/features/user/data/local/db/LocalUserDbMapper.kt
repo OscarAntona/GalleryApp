@@ -5,7 +5,6 @@ import com.antgut.myapplication.features.user.domain.User
 fun LocalUserEntity.toDomain(): User {
     return User(
         this.id,
-        this.serverId,
         this.name,
         this.username,
         this.email,
@@ -15,7 +14,6 @@ fun LocalUserEntity.toDomain(): User {
 fun User.toLocalEntity(): LocalUserEntity {
     return LocalUserEntity(
         this.id,
-        this.serverId,
         this.name,
         this.username,
         this.email

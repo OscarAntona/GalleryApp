@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.antgut.myapplication.app.domain.ErrorApp
-import com.antgut.myapplication.features.user.domain.DeleteUserUseCase
-import com.antgut.myapplication.features.user.domain.GetUserUseCase
-import com.antgut.myapplication.features.user.domain.SaveUserUseCase
+import com.antgut.myapplication.features.user.domain.DeleteServerUserUseCase
+import com.antgut.myapplication.features.user.domain.GetServerUserUseCase
+import com.antgut.myapplication.features.user.domain.SaveServerUserUseCase
 import com.antgut.myapplication.features.user.domain.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,9 +16,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserDialogViewModel @Inject constructor(
-    private val saveUserUseCase: SaveUserUseCase,
-    private val getUserUseCase: GetUserUseCase,
-    private val deleteUserUseCase: DeleteUserUseCase
+    private val saveServerUserUseCase: SaveServerUserUseCase,
+    private val getServerUserUseCase: GetServerUserUseCase,
+    private val deleteServerUserUseCase: DeleteServerUserUseCase
 ) : ViewModel() {
     private val _uiModel = MutableLiveData<UiModel>()
     val uiModel: LiveData<UiModel>
@@ -26,7 +26,7 @@ class UserDialogViewModel @Inject constructor(
 
     fun saveUser(user: User) {
         viewModelScope.launch(Dispatchers.IO) {
-            saveUserUseCase(user).apply {
+            saveServerUserUseCase(user).apply {
                 _uiModel.postValue(
                     UiModel(
                         isSuccess = false,
@@ -40,7 +40,7 @@ class UserDialogViewModel @Inject constructor(
 
     fun getUser(userId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            getUserUseCase.invoke(userId).apply {
+            getServerUserUseCase.invoke(userId).apply {
                 _uiModel.postValue(
                     UiModel(
                         isSuccess = false,
@@ -50,7 +50,7 @@ class UserDialogViewModel @Inject constructor(
                     )
                 )
             }
-            getUserUseCase(userId).map { user ->
+            getServerUserUseCase(userId).map { user ->
                 _uiModel.postValue(UiModel(user = user))
             }
         }
@@ -58,7 +58,7 @@ class UserDialogViewModel @Inject constructor(
 
     fun deleteUser(userId: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            deleteUserUseCase(userId).fold(
+            deleteServerUserUseCase(userId).fold(
                 { errorResponse(it) },
                 { successDeleteUser(it) }
             )

@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.antgut.myapplication.app.domain.ErrorApp
-import com.antgut.myapplication.features.user.domain.GetUsersUseCase
+import com.antgut.myapplication.features.user.domain.GetServerUsersUseCase
 import com.antgut.myapplication.features.user.domain.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserListViewModel @Inject constructor(
-    private val getUsersUseCase: GetUsersUseCase
+    private val getServerUsersUseCase: GetServerUsersUseCase
 ) : ViewModel() {
 
     private val _uiModel = MutableLiveData<UiModel>()
@@ -24,7 +24,7 @@ class UserListViewModel @Inject constructor(
     fun loadUsers() {
         _uiModel.value = UiModel(isLoading = true)
         viewModelScope.launch(Dispatchers.IO) {
-            getUsersUseCase.invoke().apply {
+            getServerUsersUseCase.invoke().apply {
                 _uiModel.postValue(
                     UiModel(
                         isLoading = false,

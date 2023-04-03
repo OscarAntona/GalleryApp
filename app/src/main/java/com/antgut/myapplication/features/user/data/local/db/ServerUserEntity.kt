@@ -10,7 +10,6 @@ const val REMOTE_USER_KEY = "serverId"
 @Entity(tableName = TABLE_REMOTE_USERS_NAME)
 data class ServerUserEntity(
     @PrimaryKey(autoGenerate = true) val id: Int?,
-    @ColumnInfo(name = REMOTE_USER_KEY) val serverId: Int?,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "username") val username: String,
     @ColumnInfo(name = "email") val email: String,

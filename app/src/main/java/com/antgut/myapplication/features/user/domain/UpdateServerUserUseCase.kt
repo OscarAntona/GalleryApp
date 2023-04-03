@@ -4,10 +4,10 @@ import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.funcional.Either
 import javax.inject.Inject
 
-class UpdateUserUseCase @Inject constructor(
-    private val userRepository: UserRepository
+class UpdateServerUserUseCase @Inject constructor(
+    private val serverUserRepository: ServerUserRepository
 ) {
     suspend operator fun invoke(user: User): Either<ErrorApp, Boolean> {
-        return userRepository.updateServerUser(user)
+        return serverUserRepository.updateServerUser(user)
     }
 }
