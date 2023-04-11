@@ -1,4 +1,4 @@
-package com.antgut.myapplication.features.user.presentation
+package com.antgut.myapplication.features.photo.presentiaton
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,23 +7,25 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.antgut.myapplication.app.extensions.showSnackBar
-import com.antgut.myapplication.databinding.FragmentUserDialogBinding
-import com.antgut.myapplication.features.user.domain.User
+import com.antgut.myapplication.databinding.FragmentPhotoDialogBinding
+import com.antgut.myapplication.features.photo.domain.Photo
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class UserAddDialogFragment : BottomSheetDialogFragment() {
-    private val viewModel by viewModels<UserAddDialogViewModel>()
-    private var _binding: FragmentUserDialogBinding? = null
-    private val binding: FragmentUserDialogBinding
+class PhotoAddDialogFragment : BottomSheetDialogFragment() {
+    private val viewModel by viewModels<PhotoAddDialogViewModel>()
+    private var _binding: FragmentPhotoDialogBinding? = null
+    private val binding: FragmentPhotoDialogBinding
         get() = _binding!!
+    private val args: PhotoAddDialogFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentUserDialogBinding.inflate(inflater, container, false)
+        _binding = FragmentPhotoDialogBinding.inflate(inflater, container, false)
         setUpView()
         return binding.root
     }
@@ -37,11 +39,12 @@ class UserAddDialogFragment : BottomSheetDialogFragment() {
         binding.apply {
 
             saveButton.setOnClickListener {
-                viewModel.saveUser(
-                    user = User(
-                        name = inputName.text.toString(),
-                        username = inputUsername.text.toString(),
-                        email = inputEmail.text.toString()
+                viewModel.savePhoto(
+                    photo = Photo(
+                        albumId = args.albumId,
+                        title = inputTitle.text.toString(),
+                        thumbnailUrl = inputThumbnail.text.toString(),
+                        url = inputUrl.text.toString()
                     )
                 )
                 findNavController().navigateUp()
@@ -52,7 +55,7 @@ class UserAddDialogFragment : BottomSheetDialogFragment() {
     }
 
     private fun setUpObserver() {
-        val subscriber = Observer<UserAddDialogViewModel.UiModel> {
+        val subscriber = Observer<PhotoAddDialogViewModel.UiModel> {
             when {
                 it.isSaved -> {
                     view?.showSnackBar("Se ha guardado correctamente")

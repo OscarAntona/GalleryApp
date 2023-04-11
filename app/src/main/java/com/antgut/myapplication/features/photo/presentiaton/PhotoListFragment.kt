@@ -81,9 +81,19 @@ class PhotoListFragment : Fragment() {
                         }
                     }
                 }
-
+                binding.apply {
+                    floatingActionButton.setOnClickListener {
+                        navigateToAddPhotoDialog(args.albumId)
+                    }
+                }
             }
         viewModel.uiModel.observe(viewLifecycleOwner, photoListSubscriber)
+    }
+
+    private fun navigateToAddPhotoDialog(albumId: Int) {
+        findNavController().navigate(
+            PhotoListFragmentDirections.actionPhotoListFragmentToPhotoAddDialogFragment(albumId)
+        )
     }
 
     private fun navigateToPhotoDetail(photoId: Int) {

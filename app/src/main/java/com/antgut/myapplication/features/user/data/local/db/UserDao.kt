@@ -7,13 +7,13 @@ interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveUser(vararg user: UserEntity)
 
-    @Query("DELETE FROM $TABLE_NAME WHERE $PK_NAME IS NOT NULL")
+    @Query("DELETE FROM $TABLE_NAME WHERE id IS NOT NULL")
     fun deleteAllUser()
 
-    @Query("DELETE FROM $TABLE_NAME WHERE $PK_NAME = :userId")
+    @Query("DELETE FROM $TABLE_NAME WHERE id = :userId")
     suspend fun deleteUser(userId: Int)
 
-    @Query("SELECT * FROM $TABLE_NAME WHERE $PK_NAME= :userId")
+    @Query("SELECT * FROM $TABLE_NAME WHERE id = :userId")
     suspend fun getUserById(userId: Int): UserEntity?
 
     @Query("SELECT * FROM $TABLE_NAME")

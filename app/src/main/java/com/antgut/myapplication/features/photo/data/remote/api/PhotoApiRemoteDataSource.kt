@@ -15,6 +15,8 @@ class PhotoApiRemoteDataSource @Inject constructor(val photoApiEndPoints: PhotoA
             photoApiEndPoints.getPhotos()
         }.map { it ->
             it.map { it.toDomain() }
+        }.map { photos ->
+            photos.take(100)
         }
     }
 }

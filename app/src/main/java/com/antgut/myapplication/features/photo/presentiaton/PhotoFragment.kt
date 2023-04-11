@@ -48,9 +48,7 @@ class PhotoFragment : Fragment() {
         binding.apply {
             layoutToolbar.viewToolbar.title = "Photos"
             layoutToolbar.viewToolbar.apply {
-                setNavigationOnClickListener {
-                    findNavController().navigateUp()
-                }
+                navigationIcon = null
             }
             photoList.apply {
                 adapter = photoAdapter

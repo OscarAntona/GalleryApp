@@ -12,10 +12,10 @@ class PhotoListViewHolder(private val view: View) :
         val binding = ViewItemPhotoBinding.bind(view)
         binding.photoThumbnail.loadUrl(photo.thumbnailUrl)
         view.setOnClickListener {
-            itemClick?.invoke(photo.id)
+            photo.id?.let { it1 -> itemClick?.invoke(it1) }
         }
         view.setOnLongClickListener {
-            onLongClick?.invoke(photo.id)
+            photo.id?.let { it1 -> onLongClick?.invoke(it1) }
             true
         }
     }

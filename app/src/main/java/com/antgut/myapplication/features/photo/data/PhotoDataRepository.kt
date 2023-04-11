@@ -18,6 +18,15 @@ class PhotoDataRepository @Inject constructor(
 ) : PhotoRepository {
     override suspend fun getPhotosByAlbum(albumId: Int): Either<ErrorApp, List<Photo>> {
         val localPhotos = localDataSource.getPhotosByAlbum(albumId)
+        return if (localPhotos.isLeft()) {
+            ErrorApp.DataError.left()
+        } else {
+            localPhotos
+        }
+    }
+
+    override suspend fun getAllPhotos(): Either<ErrorApp, List<Photo>> {
+
         return if (cache.isCacheOutDated()) {
             return remoteDataSource.getPhotos().map { remotePhotos ->
                 localDataSource.clear()
@@ -26,20 +35,7 @@ class PhotoDataRepository @Inject constructor(
                 remotePhotos
             }
         } else {
-            localPhotos
-        }
-    }
-
-    override suspend fun getAllPhotos(): Either<ErrorApp, List<Photo>> {
-        val localPhotos = localDataSource.getPhotos()
-        return if (localPhotos.isEmpty()) {
-            return remoteDataSource.getPhotos().map { remotePhotos ->
-                localDataSource.clear()
-                localDataSource.savePhotos(remotePhotos)
-                remotePhotos
-            }
-        } else {
-            localPhotos.right()
+            localDataSource.getPhotos().right()
         }
     }
 

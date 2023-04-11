@@ -11,18 +11,18 @@ class PhotoCache @Inject constructor(
     private val editor = preferences.edit()
 
     fun isCacheOutDated(): Boolean {
-        val timeSave = preferences.getLong("cache", 1)
-        return if(timeSave.compareTo(1) == 0){
+        val timeSave = preferences.getLong("photo cache", 1)
+        return if (timeSave.compareTo(1) == 0) {
             true
-        }else{
+        } else {
             val timeLimit = 1000 * 3600 * 2//horas
-            val timePassed = (System.currentTimeMillis()-timeSave)
+            val timePassed = (System.currentTimeMillis() - timeSave)
             timePassed > timeLimit
         }
     }
 
     fun saveCacheDate() {
-        editor.putLong("cache",System.currentTimeMillis())
+        editor.putLong("photo cache", System.currentTimeMillis())
         editor.apply()
     }
 }

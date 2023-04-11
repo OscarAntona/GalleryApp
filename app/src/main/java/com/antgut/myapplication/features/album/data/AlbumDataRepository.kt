@@ -17,7 +17,6 @@ class AlbumDataRepository @Inject constructor(
     private val cache: AlbumCache
 ) : AlbumRepository {
     override suspend fun getAllAlbums(): Either<ErrorApp, List<Album>> {
-        val localAlbums = localDataSource.getAlbums()
         return if (cache.isCacheOutDated()) {
             return remoteDataSource.getAlbums().map { remoteAlbums ->
                 localDataSource.clear()
@@ -26,7 +25,7 @@ class AlbumDataRepository @Inject constructor(
                 remoteAlbums
             }
         } else {
-            localAlbums.right()
+            localDataSource.getAlbums().right()
         }
     }
 

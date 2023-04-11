@@ -17,7 +17,6 @@ class UserDataRepository @Inject constructor(
     private val cache: UserCache
 ) : UserRepository {
     override suspend fun getUsers(): Either<ErrorApp, List<User>> {
-        val localUsers = localDataSource.getUsers()
         return if (cache.isCacheOutDated()) {
             return remoteDataSource.getUsers().map { remoteUsers ->
                 localDataSource.clear()
@@ -26,7 +25,7 @@ class UserDataRepository @Inject constructor(
                 remoteUsers
             }
         } else {
-            localUsers.right()
+            localDataSource.getUsers().right()
         }
     }
 

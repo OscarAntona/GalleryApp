@@ -22,9 +22,11 @@ class PhotoDbLocalDataSource @Inject constructor(
     }
 
     override suspend fun updatePhoto(photo: Photo): Either<ErrorApp, Boolean> {
-        return dao.getPhotoById(photo.id)?.apply {
-            dao.savePhoto(photo.toEntity())
-        }?.let { true.right() } ?: ErrorApp.DataError.left()
+        return photo.id?.let {
+            dao.getPhotoById(it)?.apply {
+                dao.savePhoto(photo.toEntity())
+            }?.let { true.right() }
+        } ?: ErrorApp.DataError.left()
     }
 
     override suspend fun deletePhoto(photoId: Int): Either<ErrorApp, Boolean> {

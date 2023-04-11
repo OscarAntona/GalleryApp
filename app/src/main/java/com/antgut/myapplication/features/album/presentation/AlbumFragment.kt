@@ -48,9 +48,7 @@ class AlbumFragment : Fragment() {
         binding.apply {
             layoutToolbar.viewToolbar.title = "Albums"
             layoutToolbar.viewToolbar.apply {
-                setNavigationOnClickListener {
-                    findNavController().navigateUp()
-                }
+                navigationIcon = null
             }
             albumList.apply {
                 adapter = albumAdapter
