@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.antgut.myapplication.app.domain.ErrorApp
-import com.antgut.myapplication.features.user.domain.SaveServerUserUseCase
+import com.antgut.myapplication.features.user.domain.SaveUserUseCase
 import com.antgut.myapplication.features.user.domain.User
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,14 +14,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserAddDialogViewModel @Inject constructor(
-    private val saveServerUserUseCase: SaveServerUserUseCase) : ViewModel() {
+    private val saveUserUseCase: SaveUserUseCase
+) : ViewModel() {
     private val _uiModel = MutableLiveData<UiModel>()
     val uiModel: LiveData<UiModel>
         get() = _uiModel
 
     fun saveUser(user: User) {
         viewModelScope.launch(Dispatchers.IO) {
-            saveServerUserUseCase(user).apply {
+            saveUserUseCase(user).apply {
                 _uiModel.postValue(
                     UiModel(
                         isSaved = true,

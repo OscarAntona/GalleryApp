@@ -5,6 +5,7 @@ import com.antgut.myapplication.app.funcional.Either
 import com.antgut.myapplication.app.funcional.left
 import com.antgut.myapplication.app.funcional.right
 import com.antgut.myapplication.features.album.data.local.AlbumLocalDataSource
+import com.antgut.myapplication.features.album.data.local.cache.AlbumCache
 import com.antgut.myapplication.features.album.data.remote.AlbumRemoteDataSource
 import com.antgut.myapplication.features.album.domain.Album
 import com.antgut.myapplication.features.album.domain.AlbumRepository
@@ -12,14 +13,16 @@ import javax.inject.Inject
 
 class AlbumDataRepository @Inject constructor(
     private val remoteDataSource: AlbumRemoteDataSource,
-    private val localDataSource: AlbumLocalDataSource
+    private val localDataSource: AlbumLocalDataSource,
+    private val cache: AlbumCache
 ) : AlbumRepository {
     override suspend fun getAllAlbums(): Either<ErrorApp, List<Album>> {
         val localAlbums = localDataSource.getAlbums()
-        return if (localAlbums.isEmpty()) {
+        return if (cache.isCacheOutDated()) {
             return remoteDataSource.getAlbums().map { remoteAlbums ->
                 localDataSource.clear()
                 localDataSource.saveAlbums(remoteAlbums)
+                cache.saveCacheDate()
                 remoteAlbums
             }
         } else {
@@ -43,11 +46,7 @@ class AlbumDataRepository @Inject constructor(
     override suspend fun getAlbumsByUser(userId: Int): Either<ErrorApp, List<Album>> {
         val localAlbums = localDataSource.getAlbumsByUser(userId)
         return if (localAlbums.isLeft()) {
-            return remoteDataSource.getAlbums().map { remoteAlbums ->
-                localDataSource.clear()
-                localDataSource.saveAlbums(remoteAlbums)
-                remoteAlbums
-            }
+            ErrorApp.DataError.left()
         } else {
             localAlbums
         }

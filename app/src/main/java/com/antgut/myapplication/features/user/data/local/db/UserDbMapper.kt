@@ -2,18 +2,20 @@ package com.antgut.myapplication.features.user.data.local.db
 
 import com.antgut.myapplication.features.user.domain.User
 
-fun ServerUserEntity.toDomain(): User {
+fun UserEntity.toDomain(): User {
     return User(
         this.id,
+        this.serverId,
         this.name,
         this.username,
-        this.email,
+        this.email
     )
 }
 
-fun User.toEntity(): ServerUserEntity {
-    return ServerUserEntity(
+fun User.toEntity(): UserEntity {
+    return UserEntity(
         this.id,
+        this.serverId,
         this.name,
         this.username,
         this.email

@@ -79,7 +79,7 @@ class UserListFragment : Fragment() {
                     }
                     binding.apply {
                         floatingActionButton.setOnClickListener {
-                        navigateToAddUserDialog()
+                            navigateToAddUserDialog()
                         }
                     }
                 }
@@ -87,6 +87,7 @@ class UserListFragment : Fragment() {
             }
         viewModel.uiModel.observe(viewLifecycleOwner, userListSubscriber)
     }
+
     private fun navigateToAddUserDialog() {
         findNavController().navigate(
             UserListFragmentDirections.actionUserListFragmentToUserAddDialogFragment()
@@ -94,15 +95,15 @@ class UserListFragment : Fragment() {
     }
 
 
-    private fun navigateToUserDialog(id: Int) {
+    private fun navigateToUserDialog(userId: Int) {
         findNavController().navigate(
-            UserListFragmentDirections.actionUserListFragmentToUserDialogFragment(id)
+            UserListFragmentDirections.actionUserListFragmentToUserDialogFragment(userId)
         )
     }
 
-    private fun navigateToAlbum(id: Int) {
+    private fun navigateToAlbum(userId: Int) {
         findNavController().navigate(
-            UserListFragmentDirections.actionUserListFragmentToAlbumsListFragment(id)
+            UserListFragmentDirections.actionUserListFragmentToAlbumsListFragment(userId)
         )
     }
 }

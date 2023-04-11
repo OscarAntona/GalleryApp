@@ -5,11 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.antgut.myapplication.app.extensions.showSnackBar
 import com.antgut.myapplication.databinding.FragmentUserDialogBinding
 import com.antgut.myapplication.features.user.domain.User
@@ -40,16 +38,20 @@ class UserAddDialogFragment : BottomSheetDialogFragment() {
         binding.apply {
 
             saveButton.setOnClickListener {
-                viewModel.saveUser(user = User(
-                    name = inputName.text.toString(),
-                    username = inputUsername.text.toString(),
-                    email = inputEmail.text.toString()))
+                viewModel.saveUser(
+                    user = User(
+                        name = inputName.text.toString(),
+                        username = inputUsername.text.toString(),
+                        email = inputEmail.text.toString()
+                    )
+                )
                 findNavController().navigateUp()
                 findNavController().navigateUp()
             }
             deleteButton.visibility = View.GONE
         }
     }
+
     private fun setUpObserver() {
         val subscriber = Observer<UserAddDialogViewModel.UiModel> {
             when {

@@ -5,6 +5,7 @@ import com.antgut.myapplication.app.funcional.Either
 import com.antgut.myapplication.app.funcional.left
 import com.antgut.myapplication.app.funcional.right
 import com.antgut.myapplication.features.photo.data.local.PhotoLocalDataSource
+import com.antgut.myapplication.features.photo.data.local.cache.PhotoCache
 import com.antgut.myapplication.features.photo.data.remote.PhotoRemoteDataSource
 import com.antgut.myapplication.features.photo.domain.Photo
 import com.antgut.myapplication.features.photo.domain.PhotoRepository
@@ -12,14 +13,16 @@ import javax.inject.Inject
 
 class PhotoDataRepository @Inject constructor(
     private val remoteDataSource: PhotoRemoteDataSource,
-    private val localDataSource: PhotoLocalDataSource
+    private val localDataSource: PhotoLocalDataSource,
+    private val cache: PhotoCache
 ) : PhotoRepository {
     override suspend fun getPhotosByAlbum(albumId: Int): Either<ErrorApp, List<Photo>> {
         val localPhotos = localDataSource.getPhotosByAlbum(albumId)
-        return if (localPhotos.isLeft()) {
+        return if (cache.isCacheOutDated()) {
             return remoteDataSource.getPhotos().map { remotePhotos ->
                 localDataSource.clear()
                 localDataSource.savePhotos(remotePhotos)
+                cache.saveCacheDate()
                 remotePhotos
             }
         } else {

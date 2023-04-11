@@ -43,7 +43,7 @@ class AlbumListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupObservers()
-        viewModel.loadAlbums(args.id)
+        viewModel.loadAlbums(args.userId)
     }
 
     private fun setupView() {

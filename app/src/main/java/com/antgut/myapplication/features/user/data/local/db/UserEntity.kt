@@ -4,13 +4,14 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-const val TABLE_LOCAL_USERS_NAME = "local_users"
+const val TABLE_NAME = "user"
+const val PK_NAME = "serverId"
 
-@Entity(tableName = TABLE_LOCAL_USERS_NAME)
-data class LocalUserEntity(
+@Entity(tableName = TABLE_NAME)
+data class UserEntity(
     @PrimaryKey(autoGenerate = true) val id: Int?,
+    @ColumnInfo(name = PK_NAME) val serverId: Int?,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "username") val username: String,
     @ColumnInfo(name = "email") val email: String,
 )
-

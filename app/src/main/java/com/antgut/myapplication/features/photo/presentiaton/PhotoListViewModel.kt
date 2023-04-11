@@ -36,6 +36,7 @@ class PhotoListViewModel @Inject constructor(
             }
         }
     }
+
     data class UiModel(
         val isLoading: Boolean = false,
         val error: ErrorApp? = null,

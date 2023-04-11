@@ -4,11 +4,11 @@ import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.funcional.Either
 import com.antgut.myapplication.app.funcional.left
 import com.antgut.myapplication.app.funcional.right
-import com.antgut.myapplication.features.user.data.local.ServerUserLocalDataSource
+import com.antgut.myapplication.features.user.data.local.UserLocalDataSource
 import com.antgut.myapplication.features.user.domain.User
 import javax.inject.Inject
 
-class ServerUserDbLocalDataSource @Inject constructor(private val dao: ServerUserDao) : ServerUserLocalDataSource {
+class UserDbLocalDataSource @Inject constructor(private val dao: UserDao) : UserLocalDataSource {
     override suspend fun saveUsers(user: List<User>) {
         user.forEach {
             dao.saveUser(it.toEntity())
@@ -38,17 +38,17 @@ class ServerUserDbLocalDataSource @Inject constructor(private val dao: ServerUse
         }
     }
 
-    override suspend fun deleteUser(id: Int): Either<ErrorApp, Boolean> {
+    override suspend fun deleteUser(userId: Int): Either<ErrorApp, Boolean> {
         return try {
-            dao.deleteUser(id)
+            dao.deleteUser(userId)
             true.right()
         } catch (e: Exception) {
             ErrorApp.DataError.left()
         }
     }
 
-    override suspend fun getUserById(id: Int): Either<ErrorApp, User> {
-        dao.getUserById(id).apply {
+    override suspend fun getUserById(userId: Int): Either<ErrorApp, User> {
+        dao.getUserById(userId).apply {
             return this?.toDomain()?.right() ?: ErrorApp.DataError.left()
         }
     }

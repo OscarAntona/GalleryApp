@@ -1,7 +1,6 @@
 package com.antgut.myapplication.features.user.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,8 +43,9 @@ class UserDialogFragment : BottomSheetDialogFragment() {
             saveButton.setOnClickListener {
                 val user = viewModel.uiModel.value?.user?.let { user ->
                     User(
-                        name = inputName.text.toString(),
                         id = args.userId,
+                        serverId = user.serverId,
+                        name = inputName.text.toString(),
                         username = user.username,
                         email = user.email
                     )
