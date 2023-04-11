@@ -45,7 +45,11 @@ class AlbumDataRepository @Inject constructor(
     override suspend fun getAlbumsByUser(userId: Int): Either<ErrorApp, List<Album>> {
         val localAlbums = localDataSource.getAlbumsByUser(userId)
         return if (localAlbums.isLeft()) {
-            ErrorApp.DataError.left()
+            return remoteDataSource.getAlbums().map { remoteAlbums ->
+                localDataSource.clear()
+                localDataSource.saveAlbums(remoteAlbums)
+                remoteAlbums
+            }
         } else {
             localAlbums
         }

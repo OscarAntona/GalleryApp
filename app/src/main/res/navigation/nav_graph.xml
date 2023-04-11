@@ -29,6 +29,10 @@
         android:id="@+id/albumListFragment"
         android:name="com.antgut.myapplication.features.album.presentation.AlbumListFragment"
         android:label="AlbumListFragment">
+        <argument
+            android:name="user_id"
+            android:defaultValue="0"
+            app:argType="integer" />
         <action
             android:id="@+id/action_albumListFragment_to_photoListFragment"
             app:destination="@id/photoListFragment"
@@ -36,10 +40,6 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
-        <argument
-            android:name="user_id"
-            android:defaultValue="0"
-            app:argType="integer" />
         <action
             android:id="@+id/action_albumListFragment_to_albumDialogFragment"
             app:destination="@id/albumDialogFragment"
@@ -90,7 +90,7 @@
         android:name="com.antgut.myapplication.features.user.presentation.UserListFragment"
         android:label="UserListFragment">
         <action
-            android:id="@+id/action_userListFragment_to_albumsListFragment"
+            android:id="@+id/action_userListFragment_to_albumListFragment"
             app:destination="@id/albumListFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"

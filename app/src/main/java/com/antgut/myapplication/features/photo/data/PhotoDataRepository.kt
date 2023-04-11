@@ -19,7 +19,11 @@ class PhotoDataRepository @Inject constructor(
     override suspend fun getPhotosByAlbum(albumId: Int): Either<ErrorApp, List<Photo>> {
         val localPhotos = localDataSource.getPhotosByAlbum(albumId)
         return if (localPhotos.isLeft()) {
-            ErrorApp.DataError.left()
+            return remoteDataSource.getPhotos().map { remotePhotos ->
+                localDataSource.clear()
+                localDataSource.savePhotos(remotePhotos)
+                remotePhotos
+            }
         } else {
             localPhotos
         }
