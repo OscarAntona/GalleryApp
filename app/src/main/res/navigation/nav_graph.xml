@@ -47,6 +47,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_albumListFragment_to_albumAddDialogFragment"
+            app:destination="@id/albumAddDialogFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/photoListFragment"
@@ -144,6 +151,10 @@
         android:id="@+id/albumFragment"
         android:name="com.antgut.myapplication.features.album.presentation.AlbumFragment"
         android:label="AlbumFragment">
+        <argument
+            android:name="user_id"
+            android:defaultValue="0"
+            app:argType="integer" />
         <action
             android:id="@+id/action_albumFragment_to_albumDialogFragment"
             app:destination="@id/albumDialogFragment"
@@ -158,11 +169,22 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_albumFragment_to_albumAddDialogFragment"
+            app:destination="@id/albumAddDialogFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/photoFragment"
         android:name="com.antgut.myapplication.features.photo.presentiaton.PhotoFragment"
         android:label="PhotoFragment">
+        <argument
+            android:name="album_id"
+            android:defaultValue="0"
+            app:argType="integer" />
         <action
             android:id="@+id/action_photoFragment_to_photoDetailFragment"
             app:destination="@id/photoDetailFragment"
@@ -173,6 +195,13 @@
         <action
             android:id="@+id/action_photoFragment_to_photoDialogFragment"
             app:destination="@id/photoDialogFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_photoFragment_to_photoAddDialogFragment"
+            app:destination="@id/photoAddDialogFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -188,6 +217,15 @@
         android:label="PhotoAddDialogFragment">
         <argument
             android:name="album_id"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </dialog>
+    <dialog
+        android:id="@+id/albumAddDialogFragment"
+        android:name="com.antgut.myapplication.features.album.presentation.AlbumAddDialogFragment"
+        android:label="AlbumAddDialogFragment">
+        <argument
+            android:name="user_id"
             android:defaultValue="0"
             app:argType="integer" />
     </dialog>

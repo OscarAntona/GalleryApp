@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.antgut.myapplication.R
 import com.antgut.myapplication.app.domain.ErrorApp
@@ -27,6 +28,7 @@ class PhotoFragment : Fragment() {
         get() = _binding!!
     private val photoAdapter = PhotoListAdapter()
     private val viewModel by viewModels<PhotoViewModel>()
+    private val args: PhotoFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,9 +79,19 @@ class PhotoFragment : Fragment() {
                         }
                     }
                 }
-
+                binding.apply {
+                    floatingActionButton.setOnClickListener {
+                        navigateToAddPhotoDialog(args.albumId)
+                    }
+                }
             }
         viewModel.uiModel.observe(viewLifecycleOwner, photoSubscriber)
+    }
+
+    private fun navigateToAddPhotoDialog(albumId: Int) {
+        findNavController().navigate(
+            PhotoFragmentDirections.actionPhotoFragmentToPhotoAddDialogFragment(albumId)
+        )
     }
 
     private fun navigateToPhotoDetail(photoId: Int) {

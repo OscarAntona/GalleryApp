@@ -22,9 +22,11 @@ class AlbumDbLocalDataSource @Inject constructor(
     }
 
     override suspend fun updateAlbum(album: Album): Either<ErrorApp, Boolean> {
-        return dao.getAlbumById(album.id)?.apply {
-            dao.saveAlbum(album.toEntity())
-        }?.let { true.right() } ?: ErrorApp.DataError.left()
+        return album.id?.let {
+            dao.getAlbumById(it)?.apply {
+                dao.saveAlbum(album.toEntity())
+            }?.let { true.right() }
+        } ?: ErrorApp.DataError.left()
     }
 
     override suspend fun deleteAlbum(albumId: Int): Either<ErrorApp, Boolean> {

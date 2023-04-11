@@ -79,10 +79,13 @@ class AlbumListFragment : Fragment() {
                         albumAdapter.onLongClickItem {
                             navigateToDialog(it)
                         }
-
                     }
                 }
-
+                binding.apply {
+                    floatingActionButton.setOnClickListener {
+                        navigateToAddAlbumDialog(args.userId)
+                    }
+                }
             }
         viewModel.uiModel.observe(viewLifecycleOwner, albumListSubscriber)
     }
@@ -96,6 +99,12 @@ class AlbumListFragment : Fragment() {
     private fun navigateToPhoto(albumId: Int) {
         findNavController().navigate(
             AlbumListFragmentDirections.actionAlbumListFragmentToPhotoListFragment(albumId)
+        )
+    }
+
+    private fun navigateToAddAlbumDialog(userId: Int) {
+        findNavController().navigate(
+            AlbumListFragmentDirections.actionAlbumListFragmentToAlbumAddDialogFragment(userId)
         )
     }
 }

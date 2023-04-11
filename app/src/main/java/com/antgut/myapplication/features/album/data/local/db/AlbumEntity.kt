@@ -10,7 +10,7 @@ const val USER_KEY = "userId"
 
 @Entity(tableName = TABLE_NAME)
 data class AlbumEntity(
-    @PrimaryKey @ColumnInfo(name = PK_NAME) val id: Int,
+    @PrimaryKey @ColumnInfo(name = PK_NAME) val id: Int?,
     @ColumnInfo(name = "userId") val userId: Int,
     @ColumnInfo(name = "title") val title: String,
 )

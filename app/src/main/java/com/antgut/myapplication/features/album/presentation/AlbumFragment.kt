@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.antgut.myapplication.R
 import com.antgut.myapplication.app.domain.ErrorApp
@@ -27,6 +28,7 @@ class AlbumFragment : Fragment() {
         get() = _binding!!
     private val albumAdapter = AlbumListAdapter()
     private val viewModel by viewModels<AlbumViewModel>()
+    private val args: AlbumFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -78,7 +80,11 @@ class AlbumFragment : Fragment() {
 
                     }
                 }
-
+                binding.apply {
+                    floatingActionButton.setOnClickListener {
+                        navigateToAddAlbumDialog(args.userId)
+                    }
+                }
             }
         viewModel.uiModel.observe(viewLifecycleOwner, albumSubscriber)
     }
@@ -92,6 +98,12 @@ class AlbumFragment : Fragment() {
     private fun navigateToPhoto(albumId: Int) {
         findNavController().navigate(
             AlbumFragmentDirections.actionAlbumFragmentToPhotoListFragment(albumId)
+        )
+    }
+
+    private fun navigateToAddAlbumDialog(userId: Int) {
+        findNavController().navigate(
+            AlbumFragmentDirections.actionAlbumFragmentToAlbumAddDialogFragment(userId)
         )
     }
 }

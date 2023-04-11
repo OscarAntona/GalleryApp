@@ -11,11 +11,11 @@ class AlbumListViewHolder(private val view: View) :
         val binding = ViewItemAlbumBinding.bind(view)
         binding.labelTitleAlbum.text = album.title
         view.setOnClickListener {
-            itemClick?.invoke(album.id)
+            album.id?.let { it1 -> itemClick?.invoke(it1) }
 
         }
         view.setOnLongClickListener {
-            onLongClick?.invoke(album.id)
+            album.id?.let { it1 -> onLongClick?.invoke(it1) }
             true
         }
     }
