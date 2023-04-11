@@ -23,24 +23,26 @@ object LocalModule {
             AppDatabase::class.java, "AppDatabase"
         ).build()
     }
+
     @Provides
     @Singleton
     @UserCacheQualifier
     fun provideUserCacheSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
-        return  context.getSharedPreferences("User cache", Context.MODE_PRIVATE)
+        return context.getSharedPreferences("User cache", Context.MODE_PRIVATE)
     }
 
     @Provides
     @Singleton
     @AlbumCacheQualifier
     fun provideAlbumCacheSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
-        return  context.getSharedPreferences("Album cache", Context.MODE_PRIVATE)
+        return context.getSharedPreferences("Album cache", Context.MODE_PRIVATE)
     }
+
     @Provides
     @Singleton
     @PhotoCacheQualifier
     fun providePhotoCacheSharedPreferences(@ApplicationContext context: Context): SharedPreferences {
-        return  context.getSharedPreferences("Photo cache", Context.MODE_PRIVATE)
+        return context.getSharedPreferences("Photo cache", Context.MODE_PRIVATE)
     }
 
 }
