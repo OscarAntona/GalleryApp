@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.antgut.myapplication.app.extensions.showSnackBar
 import com.antgut.myapplication.databinding.FragmentUserDialogBinding
 import com.antgut.myapplication.features.user.domain.User
@@ -43,6 +44,7 @@ class UserAddDialogFragment : BottomSheetDialogFragment() {
                         email = inputEmail.text.toString()
                     )
                 )
+                findNavController().navigateUp()
             }
             deleteButton.visibility = View.GONE
         }

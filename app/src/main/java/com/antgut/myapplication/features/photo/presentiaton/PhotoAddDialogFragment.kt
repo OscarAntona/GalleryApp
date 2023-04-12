@@ -48,7 +48,6 @@ class PhotoAddDialogFragment : BottomSheetDialogFragment() {
                     )
                 )
                 findNavController().navigateUp()
-                findNavController().navigateUp()
             }
             deleteButton.visibility = View.GONE
         }

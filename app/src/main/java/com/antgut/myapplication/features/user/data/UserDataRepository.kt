@@ -3,6 +3,7 @@ package com.antgut.myapplication.features.user.data
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.funcional.Either
 import com.antgut.myapplication.app.funcional.left
+import com.antgut.myapplication.app.funcional.right
 import com.antgut.myapplication.features.user.data.local.UserLocalDataSource
 import com.antgut.myapplication.features.user.data.local.cache.UserCache
 import com.antgut.myapplication.features.user.data.remote.UserRemoteDataSource
@@ -26,7 +27,7 @@ class UserDataRepository @Inject constructor(
                 localDataSource.getUsers()
             }
         } else {
-            Either.Right(localDataSource.getUsers())
+            localDataSource.getUsers().right()
         }
     }
 

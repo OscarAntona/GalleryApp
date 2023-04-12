@@ -52,7 +52,6 @@ class PhotoDialogFragment : BottomSheetDialogFragment() {
                     viewModel.savePhoto(photo)
                 }
                 findNavController().navigateUp()
-                findNavController().navigateUp()
             }
             deleteButton.setOnClickListener {
                 viewModel.deletePhoto(args.photoId)

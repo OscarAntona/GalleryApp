@@ -6,6 +6,8 @@ import com.antgut.myapplication.app.funcional.left
 import com.antgut.myapplication.app.funcional.right
 import com.antgut.myapplication.features.photo.data.local.PhotoLocalDataSource
 import com.antgut.myapplication.features.photo.domain.Photo
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class PhotoDbLocalDataSource @Inject constructor(
@@ -38,28 +40,28 @@ class PhotoDbLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getPhotos(): List<Photo> {
-        val photoLocal = dao.getAllPhoto()
-        return if (photoLocal.isEmpty()) {
-            emptyList()
-        } else {
-            photoLocal.map {
-                it.toDomain()
-            }
-        }
-    }
-
-    override suspend fun getPhotosByAlbum(albumId: Int): Either<ErrorApp, List<Photo>> {
-        dao.getPhotosByAlbum(albumId).apply {
-            return if (this.isEmpty()) {
-                ErrorApp.DataError.left()
+    override suspend fun getPhotos(): Flow<List<Photo>> = dao.getAllPhoto()
+        .map { photoLocal ->
+            if (photoLocal.isEmpty()) {
+                emptyList()
             } else {
-                this.map {
+                photoLocal.map {
                     it.toDomain()
-                }.right()
+                }
             }
         }
-    }
+
+    override suspend fun getPhotosByAlbum(albumId: Int): Flow<List<Photo>> =
+        dao.getPhotosByAlbum(albumId)
+            .map { photoLocal ->
+                if (photoLocal.isEmpty()) {
+                    emptyList()
+                } else {
+                    photoLocal.map {
+                        it.toDomain()
+                    }
+                }
+            }
 
     override suspend fun getPhotoById(photoId: Int): Either<ErrorApp, Photo> {
         dao.getPhotoById(photoId).apply {

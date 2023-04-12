@@ -3,6 +3,7 @@ package com.antgut.myapplication.features.album.data
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.funcional.Either
 import com.antgut.myapplication.app.funcional.left
+import com.antgut.myapplication.app.funcional.right
 import com.antgut.myapplication.features.album.data.local.AlbumLocalDataSource
 import com.antgut.myapplication.features.album.data.local.cache.AlbumCache
 import com.antgut.myapplication.features.album.data.remote.AlbumRemoteDataSource
@@ -25,7 +26,7 @@ class AlbumDataRepository @Inject constructor(
                 localDataSource.getAlbums()
             }
         } else {
-            Either.Right(localDataSource.getAlbums())
+            localDataSource.getAlbums().right()
         }
     }
 
@@ -51,7 +52,7 @@ class AlbumDataRepository @Inject constructor(
                 localDataSource.getAlbums()
             }
         } else {
-            Either.Right(localDataSource.getAlbums())
+            localDataSource.getAlbumsByUser(userId).right()
         }
     }
 

@@ -54,7 +54,6 @@ class UserDialogFragment : BottomSheetDialogFragment() {
                     viewModel.saveUser(user)
                 }
                 findNavController().navigateUp()
-                findNavController().navigateUp()
             }
             deleteButton.setOnClickListener {
                 viewModel.deleteUser(args.userId)

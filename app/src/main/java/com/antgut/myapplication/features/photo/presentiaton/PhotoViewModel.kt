@@ -25,13 +25,17 @@ class PhotoViewModel @Inject constructor(
         _uiModel.value = UiModel(isLoading = true)
         viewModelScope.launch(Dispatchers.IO) {
             getAllPhotosUseCase.invoke().apply {
-                _uiModel.postValue(
-                    UiModel(
-                        isLoading = false,
-                        error = this.swap().getOrNull(),
-                        photoList = this.getOrNull()
-                    )
-                )
+                this.map { listFlow ->
+                    listFlow.collect {
+                        _uiModel.postValue(
+                            UiModel(
+                                isLoading = false,
+                                error = this.swap().getOrNull(),
+                                photoList = it
+                            )
+                        )
+                    }
+                }
             }
         }
     }
