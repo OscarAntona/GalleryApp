@@ -36,9 +36,12 @@ class MainActivity : AppCompatActivity() {
         binding?.apply {
             bottomMenu.setupWithNavController(navController)
             navController.addOnDestinationChangedListener { _, destination, _ ->
-                if (destination.id == R.id.userListFragment
-                    || destination.id == R.id.albumFragment
-                    || destination.id == R.id.photoFragment
+                if (destination.id == R.id.user_list_fragment
+                    || destination.id == R.id.album_fragment
+                    || destination.id == R.id.photo_fragment
+                    || destination.id == R.id.no_internet_error_fragment
+                    || destination.id == R.id.server_error_fragment
+                    || destination.id == R.id.unknown_error_fragment
                 ) {
                     bottomMenu.visibility = View.VISIBLE
                 } else {

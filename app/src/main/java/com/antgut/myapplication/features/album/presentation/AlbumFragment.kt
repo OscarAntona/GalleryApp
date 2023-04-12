@@ -14,14 +14,18 @@ import com.antgut.myapplication.R
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.extensions.hideWithDelay
 import com.antgut.myapplication.app.extensions.showWithDelay
+import com.antgut.myapplication.app.presentation.errors.ErrorAppHandler
 import com.antgut.myapplication.databinding.FragmentAlbumListBinding
 import com.antgut.myapplication.features.album.presentation.adapter.AlbumListAdapter
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AlbumFragment : Fragment() {
+    @Inject
+    lateinit var errorAppHandler: ErrorAppHandler
     private var skeleton: Skeleton? = null
     private var _binding: FragmentAlbumListBinding? = null
     private val binding: FragmentAlbumListBinding
@@ -68,7 +72,7 @@ class AlbumFragment : Fragment() {
                 } else {
                     skeleton?.hideWithDelay()
                     uiState.error?.let {
-                        ErrorApp.DataError
+                        showError(uiState.error)
                     } ?: run {
                         albumAdapter.submitList(uiState.albumList)
                         albumAdapter.setOnClickItem {
@@ -105,5 +109,9 @@ class AlbumFragment : Fragment() {
         findNavController().navigate(
             AlbumFragmentDirections.actionAlbumFragmentToAlbumAddDialogFragment(userId)
         )
+    }
+
+    private fun showError(errorApp: ErrorApp) {
+        errorAppHandler.navigateToError(errorApp)
     }
 }

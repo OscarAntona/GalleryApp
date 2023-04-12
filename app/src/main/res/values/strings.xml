@@ -30,4 +30,18 @@
     <string name="menu_albums_title">Albums</string>
     <string name="menu_users_title">Users</string>
     <string name="menu_photos_title">Photos</string>
+    <string name="close_button">Close</string>
+    <string name="error_image">error image</string>
+
+
+    <string name="label_title_no_internet_error">Sin conexion a internet</string>
+    <string name="label_desc_no_internet_error">¿Tienes conexion a internet? No hemos podido obtener la informacion porque no se tiene una conexion a internet</string>
+
+
+    <string name="label_title_unknown_error">Error en nuestra app</string>
+    <string name="label_desc_unknown_error">Lo sentimos, se ha producido un error inesperado en la App. Intentaremos resolverlo lo antes posible</string>
+
+
+    <string name="label_title_server_error">Error en nuestro servidor</string>
+    <string name="label_desc_server_error">Lo sentimos, se ha producido un error en nuestro servidor. Por favor, intentalo más tarde</string>
 </resources>

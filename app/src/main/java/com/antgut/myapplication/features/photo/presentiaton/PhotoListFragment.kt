@@ -14,14 +14,18 @@ import com.antgut.myapplication.R
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.extensions.hideWithDelay
 import com.antgut.myapplication.app.extensions.showWithDelay
+import com.antgut.myapplication.app.presentation.errors.ErrorAppHandler
 import com.antgut.myapplication.databinding.FragmentPhotoListBinding
 import com.antgut.myapplication.features.photo.presentiaton.adapter.PhotoListAdapter
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PhotoListFragment : Fragment() {
+    @Inject
+    lateinit var errorAppHandler: ErrorAppHandler
     private var skeleton: Skeleton? = null
     private var _binding: FragmentPhotoListBinding? = null
     private val binding: FragmentPhotoListBinding
@@ -70,7 +74,7 @@ class PhotoListFragment : Fragment() {
                 } else {
                     skeleton?.hideWithDelay()
                     uiModel.error?.let {
-                        ErrorApp.DataError
+                        showError(uiModel.error)
                     } ?: run {
                         photoAdapter.submitList(uiModel.photoList)
                         photoAdapter.setOnClickItem {
@@ -106,5 +110,9 @@ class PhotoListFragment : Fragment() {
         findNavController().navigate(
             PhotoListFragmentDirections.actionPhotoListFragmentToPhotoDialogFragment(photoId)
         )
+    }
+
+    private fun showError(errorApp: ErrorApp) {
+        errorAppHandler.navigateToError(errorApp)
     }
 }

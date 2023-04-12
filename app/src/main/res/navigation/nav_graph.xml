@@ -2,28 +2,52 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/userListFragment">
+    app:startDestination="@id/user_list_fragment">
     <action
         android:id="@+id/action_users"
-        app:destination="@id/userListFragment"
+        app:destination="@id/user_list_fragment"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_left"
         app:popExitAnim="@anim/slide_out_right" />
     <action
         android:id="@+id/action_albums"
-        app:destination="@id/albumFragment"
+        app:destination="@id/album_fragment"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_left"
         app:popExitAnim="@anim/slide_out_right" />
     <action
         android:id="@+id/action_photos"
-        app:destination="@id/photoFragment"
+        app:destination="@id/photo_fragment"
         app:enterAnim="@anim/slide_in_right"
         app:exitAnim="@anim/slide_out_left"
         app:popEnterAnim="@anim/slide_in_left"
         app:popExitAnim="@anim/slide_out_right" />
+
+    <action
+        android:id="@+id/action_to_data_error"
+        app:destination="@id/error_app_fragment"
+        app:popUpTo="@+id/error_app_fragment"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_to_nointernet_error"
+        app:destination="@id/no_internet_error_fragment"
+        app:popUpTo="@+id/no_internet_error_fragment"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_to_server_error"
+        app:destination="@id/server_error_fragment"
+        app:popUpTo="@+id/server_error_fragment"
+        app:popUpToInclusive="true" />
+
+    <action
+        android:id="@+id/action_to_unknown_error"
+        app:destination="@id/unknown_error_fragment"
+        app:popUpTo="@+id/unknown_error_fragment"
+        app:popUpToInclusive="true" />
 
     <fragment
         android:id="@+id/albumListFragment"
@@ -86,7 +110,7 @@
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
-        android:id="@+id/userListFragment"
+        android:id="@+id/user_list_fragment"
         android:name="com.antgut.myapplication.features.user.presentation.UserListFragment"
         android:label="UserListFragment">
         <action
@@ -148,7 +172,7 @@
             app:argType="integer" />
     </dialog>
     <fragment
-        android:id="@+id/albumFragment"
+        android:id="@+id/album_fragment"
         android:name="com.antgut.myapplication.features.album.presentation.AlbumFragment"
         android:label="AlbumFragment">
         <argument
@@ -178,7 +202,7 @@
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
-        android:id="@+id/photoFragment"
+        android:id="@+id/photo_fragment"
         android:name="com.antgut.myapplication.features.photo.presentiaton.PhotoFragment"
         android:label="PhotoFragment">
         <argument
@@ -229,4 +253,20 @@
             android:defaultValue="0"
             app:argType="integer" />
     </dialog>
+    <fragment
+        android:id="@+id/no_internet_error_fragment"
+        android:name="com.antgut.myapplication.app.presentation.errors.NoInternetErrorFragment"
+        android:label="NoInternetErrorFragment" />
+    <fragment
+        android:id="@+id/server_error_fragment"
+        android:name="com.antgut.myapplication.app.presentation.errors.ServerErrorFragment"
+        android:label="ServerErrorFragment" />
+    <fragment
+        android:id="@+id/unknown_error_fragment"
+        android:name="com.antgut.myapplication.app.presentation.errors.UnknownErrorFragment"
+        android:label="UnknownErrorFragment" />
+    <fragment
+        android:id="@+id/error_app_fragment"
+        android:name="com.antgut.myapplication.app.presentation.errors.ErrorAppFragment"
+        android:label="ErrorAppFragment" />
 </navigation>

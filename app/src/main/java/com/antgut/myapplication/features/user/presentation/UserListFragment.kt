@@ -13,14 +13,18 @@ import com.antgut.myapplication.R
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.extensions.hideWithDelay
 import com.antgut.myapplication.app.extensions.showWithDelay
+import com.antgut.myapplication.app.presentation.errors.ErrorAppHandler
 import com.antgut.myapplication.databinding.FragmentUserListBinding
 import com.antgut.myapplication.features.user.presentation.adapter.UserListAdapter
 import com.faltenreich.skeletonlayout.Skeleton
 import com.faltenreich.skeletonlayout.applySkeleton
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class UserListFragment : Fragment() {
+    @Inject
+    lateinit var errorAppHandler: ErrorAppHandler
     private var skeleton: Skeleton? = null
     private var _binding: FragmentUserListBinding? = null
     private val binding: FragmentUserListBinding
@@ -67,7 +71,7 @@ class UserListFragment : Fragment() {
                 } else {
                     skeleton?.hideWithDelay()
                     uiState.error?.let {
-                        ErrorApp.DataError
+                        showError(uiState.error)
                     } ?: run {
                         userAdapter.submitList(uiState.userList)
                         userAdapter.setOnClickItem {
@@ -83,7 +87,6 @@ class UserListFragment : Fragment() {
                         navigateToAddUserDialog()
                     }
                 }
-
             }
         viewModel.uiModel.observe(viewLifecycleOwner, userListSubscriber)
     }
@@ -105,5 +108,9 @@ class UserListFragment : Fragment() {
         findNavController().navigate(
             UserListFragmentDirections.actionUserListFragmentToUserDialogFragment(userId)
         )
+    }
+
+    private fun showError(errorApp: ErrorApp) {
+        errorAppHandler.navigateToError(errorApp)
     }
 }

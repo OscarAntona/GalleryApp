@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context="com.iesam.youthcard.app.presentation.error.ErrorAppFragment">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_error"
+            style="@style/ImageRoundCorner"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/error_image_height"
+            android:layout_marginStart="@dimen/spacing_l"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:layout_marginEnd="@dimen/spacing_l"
+            android:layout_marginBottom="@dimen/spacing_l"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/error_image"
+            android:scaleType="fitCenter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/error_image" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_title_error"
+            style="@style/TextAppearance.Material3.HeadlineLarge"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:gravity="center"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/img_error"
+            app:layout_constraintStart_toStartOf="@id/img_error"
+            app:layout_constraintTop_toBottomOf="@+id/img_error"
+            tools:text="Titulo Error" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/label_desc_error"
+            style="@style/TextAppearance.AppCompat.Headline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_l"
+            android:layout_marginTop="@dimen/spacing_l"
+            android:layout_marginEnd="@dimen/spacing_l"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="@id/img_error"
+            app:layout_constraintStart_toStartOf="@id/img_error"
+            app:layout_constraintTop_toBottomOf="@id/label_title_error"
+            tools:text="Error" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/action_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/spacing_l"
+            android:contentDescription="@string/label_album"
+            android:text="@string/close_button"
+            app:layout_constraintEnd_toEndOf="@id/img_error"
+            app:layout_constraintStart_toStartOf="@id/img_error"
+            app:layout_constraintTop_toBottomOf="@id/label_desc_error" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

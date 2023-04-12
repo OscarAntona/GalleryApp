@@ -6,4 +6,5 @@
     <dimen name="spacing_m">12dp</dimen>
     <dimen name="spacing_l">16dp</dimen>
     <dimen name="spacing_xl">24dp</dimen>
+    <dimen name="error_image_height">500dp</dimen>
 </resources>
