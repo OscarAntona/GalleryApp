@@ -1,6 +1,7 @@
 package com.antgut.myapplication.features.album.data.local.db
 
 import androidx.room.*
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AlbumDao {
@@ -11,7 +12,7 @@ interface AlbumDao {
     suspend fun deleteAllAlbum()
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $USER_KEY = :userId")
-    suspend fun getAlbumsByUser(userId: Int): List<AlbumEntity>
+    fun getAlbumsByUser(userId: Int): Flow<List<AlbumEntity>>
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $PK_NAME = :albumId")
     suspend fun getAlbumById(albumId: Int): AlbumEntity?
@@ -20,5 +21,5 @@ interface AlbumDao {
     suspend fun deleteAlbum(albumId: Int)
 
     @Query("SELECT * FROM $TABLE_NAME")
-    suspend fun getAllAlbum(): List<AlbumEntity>
+    fun getAllAlbum(): Flow<List<AlbumEntity>>
 }

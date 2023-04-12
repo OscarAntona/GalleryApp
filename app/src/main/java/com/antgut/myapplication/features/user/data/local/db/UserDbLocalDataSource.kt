@@ -6,6 +6,8 @@ import com.antgut.myapplication.app.funcional.left
 import com.antgut.myapplication.app.funcional.right
 import com.antgut.myapplication.features.user.data.local.UserLocalDataSource
 import com.antgut.myapplication.features.user.domain.User
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class UserDbLocalDataSource @Inject constructor(private val dao: UserDao) : UserLocalDataSource {
@@ -27,16 +29,17 @@ class UserDbLocalDataSource @Inject constructor(private val dao: UserDao) : User
         } ?: ErrorApp.DataError.left()
     }
 
-    override suspend fun getUsers(): List<User> {
-        val userLocal = dao.getAllUser()
-        return if (userLocal.isEmpty()) {
-            emptyList()
-        } else {
-            userLocal.map {
-                it.toDomain()
+    override suspend fun getUsers(): Flow<List<User>> = dao.getAllUser()
+        .map { userLocal ->
+            if (userLocal.isEmpty()) {
+                emptyList()
+            } else {
+                userLocal.map {
+                    it.toDomain()
+                }
             }
         }
-    }
+
 
     override suspend fun deleteUser(userId: Int): Either<ErrorApp, Boolean> {
         return try {

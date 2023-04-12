@@ -6,6 +6,8 @@ import com.antgut.myapplication.app.funcional.left
 import com.antgut.myapplication.app.funcional.right
 import com.antgut.myapplication.features.album.data.local.AlbumLocalDataSource
 import com.antgut.myapplication.features.album.domain.Album
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class AlbumDbLocalDataSource @Inject constructor(
@@ -38,16 +40,16 @@ class AlbumDbLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getAlbums(): List<Album> {
-        val albumLocal = dao.getAllAlbum()
-        return if (albumLocal.isEmpty()) {
-            emptyList()
-        } else {
-            albumLocal.map {
-                it.toDomain()
+    override suspend fun getAlbums(): Flow<List<Album>> = dao.getAllAlbum()
+        .map { albumLocal ->
+            if (albumLocal.isEmpty()) {
+                emptyList()
+            } else {
+                albumLocal.map {
+                    it.toDomain()
+                }
             }
         }
-    }
 
     override suspend fun getAlbumById(albumId: Int): Either<ErrorApp, Album> {
         dao.getAlbumById(albumId).apply {
@@ -55,17 +57,17 @@ class AlbumDbLocalDataSource @Inject constructor(
         }
     }
 
-    override suspend fun getAlbumsByUser(userId: Int): Either<ErrorApp, List<Album>> {
-        dao.getAlbumsByUser(userId).apply {
-            return if (this.isEmpty()) {
-                ErrorApp.DataError.left()
-            } else {
-                this.map {
-                    it.toDomain()
-                }.right()
+    override suspend fun getAlbumsByUser(userId: Int): Flow<List<Album>> =
+        dao.getAlbumsByUser(userId)
+            .map { albumLocal ->
+                if (albumLocal.isEmpty()) {
+                    emptyList()
+                } else {
+                    albumLocal.map {
+                        it.toDomain()
+                    }
+                }
             }
-        }
-    }
 
     override suspend fun clear() {
         dao.deleteAllAlbum()

@@ -3,12 +3,12 @@ package com.antgut.myapplication.features.album.data
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.funcional.Either
 import com.antgut.myapplication.app.funcional.left
-import com.antgut.myapplication.app.funcional.right
 import com.antgut.myapplication.features.album.data.local.AlbumLocalDataSource
 import com.antgut.myapplication.features.album.data.local.cache.AlbumCache
 import com.antgut.myapplication.features.album.data.remote.AlbumRemoteDataSource
 import com.antgut.myapplication.features.album.domain.Album
 import com.antgut.myapplication.features.album.domain.AlbumRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class AlbumDataRepository @Inject constructor(
@@ -16,16 +16,16 @@ class AlbumDataRepository @Inject constructor(
     private val localDataSource: AlbumLocalDataSource,
     private val cache: AlbumCache
 ) : AlbumRepository {
-    override suspend fun getAllAlbums(): Either<ErrorApp, List<Album>> {
+    override suspend fun getAllAlbums(): Either<ErrorApp, Flow<List<Album>>> {
         return if (cache.isCacheOutDated()) {
             return remoteDataSource.getAlbums().map { remoteAlbums ->
                 localDataSource.clear()
                 localDataSource.saveAlbums(remoteAlbums)
                 cache.saveCacheDate()
-                remoteAlbums
+                localDataSource.getAlbums()
             }
         } else {
-            localDataSource.getAlbums().right()
+            Either.Right(localDataSource.getAlbums())
         }
     }
 
@@ -42,16 +42,16 @@ class AlbumDataRepository @Inject constructor(
         localDataSource.saveAlbum(album)
     }
 
-    override suspend fun getAlbumsByUser(userId: Int): Either<ErrorApp, List<Album>> {
-        val localAlbums = localDataSource.getAlbumsByUser(userId)
-        return if (localAlbums.isLeft()) {
-            return remoteDataSource.getAlbums().map { remoteAlbums ->
+    override suspend fun getAlbumsByUser(userId: Int): Either<ErrorApp, Flow<List<Album>>> {
+        return if (cache.isCacheOutDated()) {
+            return remoteDataSource.getAlbumsByUser(userId).map { remoteAlbums ->
                 localDataSource.clear()
                 localDataSource.saveAlbums(remoteAlbums)
-                remoteAlbums
+                cache.saveCacheDate()
+                localDataSource.getAlbums()
             }
         } else {
-            localAlbums
+            Either.Right(localDataSource.getAlbums())
         }
     }
 

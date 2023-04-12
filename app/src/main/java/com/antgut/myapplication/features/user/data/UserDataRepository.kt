@@ -3,12 +3,12 @@ package com.antgut.myapplication.features.user.data
 import com.antgut.myapplication.app.domain.ErrorApp
 import com.antgut.myapplication.app.funcional.Either
 import com.antgut.myapplication.app.funcional.left
-import com.antgut.myapplication.app.funcional.right
 import com.antgut.myapplication.features.user.data.local.UserLocalDataSource
 import com.antgut.myapplication.features.user.data.local.cache.UserCache
 import com.antgut.myapplication.features.user.data.remote.UserRemoteDataSource
 import com.antgut.myapplication.features.user.domain.User
 import com.antgut.myapplication.features.user.domain.UserRepository
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class UserDataRepository @Inject constructor(
@@ -16,18 +16,20 @@ class UserDataRepository @Inject constructor(
     private val localDataSource: UserLocalDataSource,
     private val cache: UserCache
 ) : UserRepository {
-    override suspend fun getUsers(): Either<ErrorApp, List<User>> {
+
+    override suspend fun getUsers(): Either<ErrorApp, Flow<List<User>>> {
         return if (cache.isCacheOutDated()) {
-            return remoteDataSource.getUsers().map { remoteUsers ->
+            remoteDataSource.getUsers().map { remoteUsers ->
                 localDataSource.clear()
                 localDataSource.saveUsers(remoteUsers)
                 cache.saveCacheDate()
-                remoteUsers
+                localDataSource.getUsers()
             }
         } else {
-            localDataSource.getUsers().right()
+            Either.Right(localDataSource.getUsers())
         }
     }
+
 
     override suspend fun getUser(userId: Int): Either<ErrorApp, User> {
         val localUser = localDataSource.getUserById(userId)

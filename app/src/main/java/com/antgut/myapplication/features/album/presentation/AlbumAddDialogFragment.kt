@@ -46,7 +46,6 @@ class AlbumAddDialogFragment : BottomSheetDialogFragment() {
                     )
                 )
                 findNavController().navigateUp()
-                findNavController().navigateUp()
             }
             deleteButton.visibility = View.GONE
         }

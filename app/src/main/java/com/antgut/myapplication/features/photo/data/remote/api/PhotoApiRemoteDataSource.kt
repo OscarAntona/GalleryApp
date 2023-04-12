@@ -19,4 +19,12 @@ class PhotoApiRemoteDataSource @Inject constructor(val photoApiEndPoints: PhotoA
             photos.take(100)
         }
     }
+
+    override suspend fun getPhotosByAlbum(albumId: Int): Either<ErrorApp, List<Photo>> {
+        return apiCall {
+            photoApiEndPoints.getPhotosByAlbum(albumId)
+        }.map { it ->
+            it.map { it.toDomain() }
+        }
+    }
 }

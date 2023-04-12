@@ -52,7 +52,6 @@ class AlbumDialogFragment : BottomSheetDialogFragment() {
                     viewModel.saveAlbum(album)
                 }
                 findNavController().navigateUp()
-                findNavController().navigateUp()
             }
             deleteButton.setOnClickListener {
                 viewModel.deleteAlbum(args.albumId)

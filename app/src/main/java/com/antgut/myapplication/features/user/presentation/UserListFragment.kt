@@ -87,11 +87,13 @@ class UserListFragment : Fragment() {
             }
         viewModel.uiModel.observe(viewLifecycleOwner, userListSubscriber)
     }
+
     private fun navigateToAlbum(userId: Int) {
         findNavController().navigate(
             UserListFragmentDirections.actionUserListFragmentToAlbumListFragment(userId)
         )
     }
+
     private fun navigateToAddUserDialog() {
         findNavController().navigate(
             UserListFragmentDirections.actionUserListFragmentToUserAddDialogFragment()

@@ -17,4 +17,12 @@ class AlbumApiRemoteDataSource @Inject constructor(val albumApiEndPoints: AlbumA
             it.map { it.toDomain() }
         }
     }
+
+    override suspend fun getAlbumsByUser(userId: Int): Either<ErrorApp, List<Album>> {
+        return apiCall {
+            albumApiEndPoints.getAlbumsByUser(userId)
+        }.map { it ->
+            it.map { it.toDomain() }
+        }
+    }
 }

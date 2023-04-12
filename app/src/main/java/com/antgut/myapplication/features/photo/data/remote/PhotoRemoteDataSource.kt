@@ -6,4 +6,5 @@ import com.antgut.myapplication.features.photo.domain.Photo
 
 interface PhotoRemoteDataSource {
     suspend fun getPhotos(): Either<ErrorApp, List<Photo>>
+    suspend fun getPhotosByAlbum(albumId: Int): Either<ErrorApp, List<Photo>>
 }
