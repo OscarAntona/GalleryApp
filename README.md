@@ -11,6 +11,3 @@ The app was developed using MVVM as an architecture pattern and also Clean Archi
 If we click any of the users, we will navigate to the albums of that user, where we have all the same options and from there we could navigate to the photos of each album.
 - **Albums list** : In this screen we see all the albums of the app and from there bavigate to the photos of each one, and of course edit, delete and add.
 - **Photos list** : This screen contains all the photos available in the app, also we can edit, delete and add photos, and navigate to the detail of the photo.
-
-**Demo**
-[device-2023-04-13-001307.webm](https://user-images.githubusercontent.com/53609303/231597865-e4dbcea3-f087-490f-b7db-0cc6260c12dd.webm)
