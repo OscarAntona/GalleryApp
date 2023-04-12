@@ -19,11 +19,11 @@ class UserDataRepository @Inject constructor(
 ) : UserRepository {
 
     override suspend fun getUsers(): Either<ErrorApp, Flow<List<User>>> {
-        return if (cache.isCacheOutDated()) {
+        return if (cache.outDated()) {
             remoteDataSource.getUsers().map { remoteUsers ->
                 localDataSource.clear()
                 localDataSource.saveUsers(remoteUsers)
-                cache.saveCacheDate()
+                cache.saveDate()
                 localDataSource.getUsers()
             }
         } else {

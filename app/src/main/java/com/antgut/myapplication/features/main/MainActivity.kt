@@ -3,6 +3,7 @@ package com.antgut.myapplication.features.main
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.antgut.myapplication.R
@@ -15,8 +16,10 @@ class MainActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val screenSplash = installSplashScreen()
         super.onCreate(savedInstanceState)
         setupView()
+        screenSplash.setKeepOnScreenCondition{ false }
     }
 
     private fun setupView() {

@@ -18,11 +18,11 @@ class AlbumDataRepository @Inject constructor(
     private val cache: AlbumCache
 ) : AlbumRepository {
     override suspend fun getAllAlbums(): Either<ErrorApp, Flow<List<Album>>> {
-        return if (cache.isCacheOutDated()) {
+        return if (cache.outDated()) {
             return remoteDataSource.getAlbums().map { remoteAlbums ->
                 localDataSource.clear()
                 localDataSource.saveAlbums(remoteAlbums)
-                cache.saveCacheDate()
+                cache.saveDate()
                 localDataSource.getAlbums()
             }
         } else {
@@ -44,11 +44,11 @@ class AlbumDataRepository @Inject constructor(
     }
 
     override suspend fun getAlbumsByUser(userId: Int): Either<ErrorApp, Flow<List<Album>>> {
-        return if (cache.isCacheOutDated()) {
+        return if (cache.outDated()) {
             return remoteDataSource.getAlbumsByUser(userId).map { remoteAlbums ->
                 localDataSource.clear()
                 localDataSource.saveAlbums(remoteAlbums)
-                cache.saveCacheDate()
+                cache.saveDate()
                 localDataSource.getAlbums()
             }
         } else {

@@ -18,11 +18,11 @@ class PhotoDataRepository @Inject constructor(
     private val cache: PhotoCache
 ) : PhotoRepository {
     override suspend fun getPhotosByAlbum(albumId: Int): Either<ErrorApp, Flow<List<Photo>>> {
-        return if (cache.isCacheOutDated()) {
+        return if (cache.outDated()) {
             return remoteDataSource.getPhotosByAlbum(albumId).map { remotePhotos ->
                 localDataSource.clear()
                 localDataSource.savePhotos(remotePhotos)
-                cache.saveCacheDate()
+                cache.saveDate()
                 localDataSource.getPhotosByAlbum(albumId)
             }
         } else {
@@ -31,11 +31,11 @@ class PhotoDataRepository @Inject constructor(
     }
 
     override suspend fun getAllPhotos(): Either<ErrorApp, Flow<List<Photo>>> {
-        return if (cache.isCacheOutDated()) {
+        return if (cache.outDated()) {
             return remoteDataSource.getPhotos().map { remotePhotos ->
                 localDataSource.clear()
                 localDataSource.savePhotos(remotePhotos)
-                cache.saveCacheDate()
+                cache.saveDate()
                 localDataSource.getPhotos()
             }
         } else {

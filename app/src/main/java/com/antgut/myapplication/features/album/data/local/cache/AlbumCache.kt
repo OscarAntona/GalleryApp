@@ -10,18 +10,18 @@ class AlbumCache @Inject constructor(
 
     private val editor = preferences.edit()
 
-    fun isCacheOutDated(): Boolean {
+    fun outDated(): Boolean {
         val timeSave = preferences.getLong("album cache", 1)
         return if (timeSave.compareTo(1) == 0) {
             true
         } else {
-            val timeLimit = 1000 * 3600 * 2//horas
             val timePassed = (System.currentTimeMillis() - timeSave)
+            val timeLimit = 1000 * 3600 * 1//horas
             timePassed > timeLimit
         }
     }
 
-    fun saveCacheDate() {
+    fun saveDate() {
         editor.putLong("album cache", System.currentTimeMillis())
         editor.apply()
     }
