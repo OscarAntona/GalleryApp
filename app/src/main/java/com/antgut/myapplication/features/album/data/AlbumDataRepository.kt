@@ -10,6 +10,7 @@ import com.antgut.myapplication.features.album.data.remote.AlbumRemoteDataSource
 import com.antgut.myapplication.features.album.domain.Album
 import com.antgut.myapplication.features.album.domain.AlbumRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
 class AlbumDataRepository @Inject constructor(
@@ -18,7 +19,7 @@ class AlbumDataRepository @Inject constructor(
     private val cache: AlbumCache
 ) : AlbumRepository {
     override suspend fun getAllAlbums(): Either<ErrorApp, Flow<List<Album>>> {
-        return if (cache.outDated()) {
+        return if (cache.outDated() || !hasLocalDataSourceAlbums(localDataSource.getAlbums())) {
             return remoteDataSource.getAlbums().map { remoteAlbums ->
                 localDataSource.clear()
                 localDataSource.saveAlbums(remoteAlbums)
@@ -43,8 +44,18 @@ class AlbumDataRepository @Inject constructor(
         localDataSource.saveAlbum(album)
     }
 
+    private suspend fun hasLocalDataSourceAlbums(localAlbums: Flow<List<Album>>): Boolean {
+        return localAlbums.firstOrNull()?.isNotEmpty() ?: false
+    }
+
     override suspend fun getAlbumsByUser(userId: Int): Either<ErrorApp, Flow<List<Album>>> {
-        return if (cache.outDated()) {
+
+        return if (cache.outDated() || !hasLocalDataSourceAlbums(
+                localDataSource.getAlbumsByUser(
+                    userId
+                )
+            )
+        ) {
             return remoteDataSource.getAlbumsByUser(userId).map { remoteAlbums ->
                 localDataSource.clear()
                 localDataSource.saveAlbums(remoteAlbums)

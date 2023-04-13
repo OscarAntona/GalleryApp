@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
         val screenSplash = installSplashScreen()
         super.onCreate(savedInstanceState)
         setupView()
-        screenSplash.setKeepOnScreenCondition{ false }
+        screenSplash.setKeepOnScreenCondition { false }
     }
 
     private fun setupView() {

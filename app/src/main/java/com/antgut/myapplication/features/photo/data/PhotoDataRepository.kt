@@ -10,6 +10,7 @@ import com.antgut.myapplication.features.photo.data.remote.PhotoRemoteDataSource
 import com.antgut.myapplication.features.photo.domain.Photo
 import com.antgut.myapplication.features.photo.domain.PhotoRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
 class PhotoDataRepository @Inject constructor(
@@ -18,7 +19,12 @@ class PhotoDataRepository @Inject constructor(
     private val cache: PhotoCache
 ) : PhotoRepository {
     override suspend fun getPhotosByAlbum(albumId: Int): Either<ErrorApp, Flow<List<Photo>>> {
-        return if (cache.outDated()) {
+        return if (cache.outDated() || !hasLocalDataSourceAlbums(
+                localDataSource.getPhotosByAlbum(
+                    albumId
+                )
+            )
+        ) {
             return remoteDataSource.getPhotosByAlbum(albumId).map { remotePhotos ->
                 localDataSource.clear()
                 localDataSource.savePhotos(remotePhotos)
@@ -31,7 +37,7 @@ class PhotoDataRepository @Inject constructor(
     }
 
     override suspend fun getAllPhotos(): Either<ErrorApp, Flow<List<Photo>>> {
-        return if (cache.outDated()) {
+        return if (cache.outDated() || !hasLocalDataSourceAlbums(localDataSource.getPhotos())) {
             return remoteDataSource.getPhotos().map { remotePhotos ->
                 localDataSource.clear()
                 localDataSource.savePhotos(remotePhotos)
@@ -50,6 +56,10 @@ class PhotoDataRepository @Inject constructor(
         } else {
             localAlbum
         }
+    }
+
+    private suspend fun hasLocalDataSourceAlbums(localAlbums: Flow<List<Photo>>): Boolean {
+        return localAlbums.firstOrNull()?.isNotEmpty() ?: false
     }
 
     override suspend fun savePhoto(photo: Photo) {

@@ -10,6 +10,7 @@ import com.antgut.myapplication.features.user.data.remote.UserRemoteDataSource
 import com.antgut.myapplication.features.user.domain.User
 import com.antgut.myapplication.features.user.domain.UserRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
 import javax.inject.Inject
 
 class UserDataRepository @Inject constructor(
@@ -19,7 +20,7 @@ class UserDataRepository @Inject constructor(
 ) : UserRepository {
 
     override suspend fun getUsers(): Either<ErrorApp, Flow<List<User>>> {
-        return if (cache.outDated()) {
+        return if (cache.outDated() || !hasLocalDataSourceAlbums(localDataSource.getUsers())) {
             remoteDataSource.getUsers().map { remoteUsers ->
                 localDataSource.clear()
                 localDataSource.saveUsers(remoteUsers)
@@ -43,6 +44,10 @@ class UserDataRepository @Inject constructor(
 
     override suspend fun saveUser(user: User) {
         localDataSource.saveUser(user)
+    }
+
+    private suspend fun hasLocalDataSourceAlbums(localAlbums: Flow<List<User>>): Boolean {
+        return localAlbums.firstOrNull()?.isNotEmpty() ?: false
     }
 
     override suspend fun updateUser(user: User): Either<ErrorApp, Boolean> {
