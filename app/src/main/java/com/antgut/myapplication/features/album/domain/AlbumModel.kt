@@ -4,4 +4,5 @@ data class Album(
     var id: Int? = null,
     val userId: Int,
     val title: String,
+    val serverId: Boolean?=true,
 )

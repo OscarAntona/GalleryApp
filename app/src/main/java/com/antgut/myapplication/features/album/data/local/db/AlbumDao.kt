@@ -8,7 +8,7 @@ interface AlbumDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun saveAlbum(vararg album: AlbumEntity)
 
-    @Query("DELETE FROM $TABLE_NAME")
+    @Query("DELETE FROM $TABLE_NAME WHERE serverId = 1")
     suspend fun deleteAllAlbum()
 
     @Query("SELECT * FROM $TABLE_NAME WHERE $USER_KEY = :userId")

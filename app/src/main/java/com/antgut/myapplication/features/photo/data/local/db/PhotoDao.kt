@@ -8,7 +8,7 @@ interface PhotoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun savePhoto(vararg photo: PhotoEntity)
 
-    @Query("DELETE FROM $TABLE_NAME")
+    @Query("DELETE FROM $TABLE_NAME WHERE serverId = 1")
     suspend fun deleteAllPhoto()
 
     @Query("DELETE FROM $TABLE_NAME WHERE $PK_NAME = :photoId")

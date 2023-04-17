@@ -18,6 +18,7 @@ class AlbumDataRepository @Inject constructor(
     private val localDataSource: AlbumLocalDataSource,
     private val cache: AlbumCache
 ) : AlbumRepository {
+
     override suspend fun getAllAlbums(): Either<ErrorApp, Flow<List<Album>>> {
         return if (cache.outDated() || !hasLocalDataSourceAlbums(localDataSource.getAlbums())) {
             return remoteDataSource.getAlbums().map { remoteAlbums ->
@@ -30,6 +31,7 @@ class AlbumDataRepository @Inject constructor(
             localDataSource.getAlbums().right()
         }
     }
+
 
     override suspend fun getAlbum(albumId: Int): Either<ErrorApp, Album> {
         val localAlbum = localDataSource.getAlbumById(albumId)
@@ -50,17 +52,15 @@ class AlbumDataRepository @Inject constructor(
 
     override suspend fun getAlbumsByUser(userId: Int): Either<ErrorApp, Flow<List<Album>>> {
 
-        return if (cache.outDated() || !hasLocalDataSourceAlbums(
+        return if (!hasLocalDataSourceAlbums(
                 localDataSource.getAlbumsByUser(
                     userId
                 )
             )
         ) {
             return remoteDataSource.getAlbumsByUser(userId).map { remoteAlbums ->
-                localDataSource.clear()
                 localDataSource.saveAlbums(remoteAlbums)
-                cache.saveDate()
-                localDataSource.getAlbums()
+                localDataSource.getAlbumsByUser(userId)
             }
         } else {
             localDataSource.getAlbumsByUser(userId).right()
