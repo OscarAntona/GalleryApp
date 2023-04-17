@@ -43,6 +43,7 @@ class PhotoDialogFragment : BottomSheetDialogFragment() {
                     Photo(
                         title = inputTitle.text.toString(),
                         id = args.photoId,
+                        serverId = photo.serverId,
                         albumId = photo.albumId,
                         url = photo.url,
                         thumbnailUrl = photo.thumbnailUrl

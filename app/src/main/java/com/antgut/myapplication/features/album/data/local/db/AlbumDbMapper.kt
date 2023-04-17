@@ -5,17 +5,17 @@ import com.antgut.myapplication.features.album.domain.Album
 fun AlbumEntity.toDomain(): Album {
     return Album(
         this.id,
+        this.serverId,
         this.userId,
         this.title,
-        this.serverId
     )
 }
 
 fun Album.toEntity(): AlbumEntity {
     return AlbumEntity(
         this.id,
+        this.serverId,
         this.userId,
-        this.title,
-        this.serverId
+        this.title
     )
 }

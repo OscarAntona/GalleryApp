@@ -4,10 +4,10 @@ import com.antgut.myapplication.features.photo.domain.Photo
 
 fun PhotoApiModel.toDomain(): Photo {
     return Photo(
-        this.id,
-        this.albumId,
-        this.title,
-        this.url,
-        this.thumbnailUrl
+        serverId = this.id,
+        albumId = this.albumId,
+        title = this.title,
+        url = this.url,
+        thumbnailUrl = this.thumbnailUrl
     )
 }

@@ -44,6 +44,7 @@ class AlbumDialogFragment : BottomSheetDialogFragment() {
                 val album = viewModel.uiModel.value?.album?.let { album ->
                     Album(
                         id = args.albumId,
+                        serverId = album.serverId,
                         userId = album.userId,
                         title = inputTitle.text.toString()
                     )

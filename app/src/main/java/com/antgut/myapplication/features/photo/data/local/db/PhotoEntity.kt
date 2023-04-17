@@ -10,10 +10,10 @@ const val ALBUM_KEY = "albumId"
 
 @Entity(tableName = TABLE_NAME)
 data class PhotoEntity(
-    @PrimaryKey @ColumnInfo(name = PK_NAME) val id: Int?,
+    @PrimaryKey(autoGenerate = true) val id: Int?,
+    @ColumnInfo(name = "serverId") val serverId:Int?,
     @ColumnInfo(name = "albumId") val albumId: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "url") val url: String,
     @ColumnInfo(name = "thumbnailUrl") val thumbnailUrl: String,
-    @ColumnInfo(name = "serverId") val serverId:Boolean?
 )
