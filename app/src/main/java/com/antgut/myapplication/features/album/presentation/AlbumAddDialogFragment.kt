@@ -42,8 +42,7 @@ class AlbumAddDialogFragment : BottomSheetDialogFragment() {
                 viewModel.saveAlbum(
                     album = Album(
                         userId = args.userId,
-                        title = inputTitle.text.toString(),
-                        serverId = false
+                        title = inputTitle.text.toString()
                     )
                 )
                 findNavController().navigateUp()

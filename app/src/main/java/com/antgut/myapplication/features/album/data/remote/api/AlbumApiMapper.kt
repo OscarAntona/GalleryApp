@@ -4,8 +4,8 @@ import com.antgut.myapplication.features.album.domain.Album
 
 fun AlbumApiModel.toDomain(): Album {
     return Album(
-        this.id,
-        this.userId,
-        this.title
+        serverId = this.id,
+        userId = this.userId,
+        title = this.title
     )
 }

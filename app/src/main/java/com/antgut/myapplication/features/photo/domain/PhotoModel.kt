@@ -2,11 +2,11 @@ package com.antgut.myapplication.features.photo.domain
 
 data class Photo(
     val id: Int? = null,
+    val serverId: Int?=null,
     val albumId: Int,
     val title: String,
     val url: String,
-    val thumbnailUrl: String,
-    val serverId: Boolean?=true
+    val thumbnailUrl: String
 )
 
 
