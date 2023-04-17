@@ -44,7 +44,8 @@ class PhotoAddDialogFragment : BottomSheetDialogFragment() {
                         albumId = args.albumId,
                         title = inputTitle.text.toString(),
                         thumbnailUrl = inputThumbnail.text.toString(),
-                        url = inputUrl.text.toString()
+                        url = inputUrl.text.toString(),
+                        serverId = false
                     )
                 )
                 findNavController().navigateUp()

@@ -13,4 +13,4 @@ data class AlbumEntity(
     @PrimaryKey @ColumnInfo(name = PK_NAME) val id: Int?,
     @ColumnInfo(name = "userId") val userId: Int,
     @ColumnInfo(name = "title") val title: String,
-)
+    @ColumnInfo(name = "serverId") val serverId:Boolean?)

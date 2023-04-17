@@ -8,7 +8,8 @@ fun PhotoEntity.toDomain(): Photo {
         this.albumId,
         this.title,
         this.url,
-        this.thumbnailUrl
+        this.thumbnailUrl,
+        this.serverId
     )
 }
 
@@ -18,6 +19,7 @@ fun Photo.toEntity(): PhotoEntity {
         this.albumId,
         this.title,
         this.url,
-        this.thumbnailUrl
+        this.thumbnailUrl,
+        this.serverId
     )
 }

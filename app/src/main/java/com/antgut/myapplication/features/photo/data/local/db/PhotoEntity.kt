@@ -14,5 +14,6 @@ data class PhotoEntity(
     @ColumnInfo(name = "albumId") val albumId: Int,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "url") val url: String,
-    @ColumnInfo(name = "thumbnailUrl") val thumbnailUrl: String
+    @ColumnInfo(name = "thumbnailUrl") val thumbnailUrl: String,
+    @ColumnInfo(name = "serverId") val serverId:Boolean?
 )

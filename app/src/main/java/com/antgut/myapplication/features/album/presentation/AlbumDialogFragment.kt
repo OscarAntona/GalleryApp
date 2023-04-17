@@ -43,9 +43,9 @@ class AlbumDialogFragment : BottomSheetDialogFragment() {
             saveButton.setOnClickListener {
                 val album = viewModel.uiModel.value?.album?.let { album ->
                     Album(
-                        title = inputTitle.text.toString(),
                         id = args.albumId,
-                        userId = album.userId
+                        userId = album.userId,
+                        title = inputTitle.text.toString()
                     )
                 }
                 if (album != null) {

@@ -19,16 +19,14 @@ class PhotoDataRepository @Inject constructor(
     private val cache: PhotoCache
 ) : PhotoRepository {
     override suspend fun getPhotosByAlbum(albumId: Int): Either<ErrorApp, Flow<List<Photo>>> {
-        return if (cache.outDated() || !hasLocalDataSourceAlbums(
+        return if (!hasLocalDataSourceAlbums(
                 localDataSource.getPhotosByAlbum(
                     albumId
                 )
             )
         ) {
             return remoteDataSource.getPhotosByAlbum(albumId).map { remotePhotos ->
-                localDataSource.clear()
                 localDataSource.savePhotos(remotePhotos)
-                cache.saveDate()
                 localDataSource.getPhotosByAlbum(albumId)
             }
         } else {
